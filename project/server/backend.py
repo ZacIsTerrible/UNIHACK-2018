@@ -15,6 +15,14 @@ specialisationToPatients = {}
 patientToProcedures = {}
 patientToProgress = {}
 
+idToDoctor["D*5b652d0f0af548bd5ec0dfbc"] = {
+    "doctor_id": "D*5b652d0f0af548bd5ec0dfbc",
+    "name": "Page Gamble",
+    "age": 30,
+    "gender": "male",
+    "specialisation": "Cardiologist"
+}
+
 # API
 @app.route('/get_progress', methods=['GET'])
 def get_progress():
