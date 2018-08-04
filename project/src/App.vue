@@ -75,6 +75,7 @@ input[type=submit]:hover {
 	<div v-if="isLoggedIn" id="pwa-view">
 		<v-toolbar app:clipped-left="clipped" color="primary" id="toolbar-style">
 		  <v-toolbar-title v-text="title"></v-toolbar-title>
+      <a href="/#"><v-btn flat color="accent" v-on:click="logout">Log Out</v-btn></a>
 		</v-toolbar>
 		<v-content>
 		  <router-view/>
@@ -121,6 +122,10 @@ export default {
       this.userName = document.getElementById('uname').value;
       this.$cookies.set('userName', this.userName);
       this.isLoggedIn = true;
+    },
+    logout: function() {
+      this.$cookies.remove("userName");
+      this.isLoggedIn = false;
     }
 
   },

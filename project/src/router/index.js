@@ -12,7 +12,7 @@ Vue.use(Router)
 export default new Router({
   routes: [
     {
-      path: '/patients',
+      path: '/',
       name: 'patient',
       component: patientsList
     },
