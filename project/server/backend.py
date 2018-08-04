@@ -6,33 +6,36 @@ app = Flask(__name__)
 CORS(app)
 
 # Data Stores
-patientList = []
-doctorsList = []
-specialtyToPatients = {}
+idToPatient = {}
+idToDoctor = {}
+specialisationToPatients = {}
 
 
 # API
 @app.route('/get_patient_list', methods=['GET'])
 def get_patient_list():
-    return jsonify(patientList)
+	doctor_id = request.args.get('doctor_id')
+	specialisation = idToDoctor[doctor_id]['specialisation']
+
+	patientQueue = specialisationToPatients[specialisation]
+	patientList = []
+
+	for patient in patientQueue:
+
+
+
+    return jsonify(specialisationToPatients[specialisation])
 
 @app.route('/get_patient', methods=['GET'])
 def get_patient():
     patient_id = request.args.get('patient_id')
-    for patient in patientList:
-        if patient["patient_id"] == patient_id:
-            return jsonify(patient["patient_id"])
-    return jsonify({ "status" : "Failure" })
+    return jsonify(idToPatient["patient_id"])
 
 @app.route('/add_condition', methods=['GET'])
 def add_condition():
 	patient_id = request.args.get('patient_id')
 	new_condition = request.args.get('condition')
-<<<<<<< Updated upstream
-	for patient in patientList:
-=======
-	for patient in patientList:        #changed paitentList to patientList
->>>>>>> Stashed changes
+	for patient in idToPatient:        
 		if patient["patient_id"] == patient_id:
 			patient["conditions"].append(new_condition)
 			break
@@ -57,6 +60,7 @@ def add_patient():
     address = request.address.get('address')
     medical_history = request.address.get('medical_history')
     dietary_requirements = request.address.get('dietary_requirements')
+    priority = request.address.get('priority')
 
     new_patient = {
     	'patient_id' : patient_id,
@@ -71,15 +75,15 @@ def add_patient():
 	   	'accepted' : accepted,
 	   	'address' : address,
 	   	'medical_history' : medical_history,
-	   	'dietary_requirements' : dietary_requirements
+	   	'dietary_requirements' : dietary_requirements,
+	   	'priority' : priority
 	}
 
 	# Adding the patient to patient list.
-	patientList.append(new_patient)
+	idToPatient[patient_id] = new_patient
 
 	# Return status. This is arbitary.
 	return jsonify({ "status" : "success" })
-<<<<<<< Updated upstream
 
 @app.route('/add_doctor', methods=['POST'])
 def add_doctor():
@@ -98,12 +102,11 @@ def add_doctor():
 		'specialisation' : specialisation
 	}
 
-	doctorsList.append(new_doctor)
+	idToDoctor[doctor_id] = new_doctor
+
+	#if we haven't seen the specialisation before create a new PQ of patients
+	if specialisation not in specialisationToPatients.keys():
+		specialisationToPatients[specialisation] = []
 
 	# Return status. This is arbitary.
 	return jsonify({ "status" : "success" })
-
-
-
-=======
->>>>>>> Stashed changes
