@@ -10,6 +10,7 @@ app = Flask(__name__)
 CORS(app)
 
 # Data Stores
+nursePQ = {}
 idToPatient = {}
 idToDoctor = {}
 specialisationToPatients = {}
@@ -58,10 +59,10 @@ def get_patient_list():
 
 @app.route('/get_all_patients', methods=['GET'])
 def get_all_patients():
-    patientList = []
-    for patient in idToPatient.values():
-        patientList.append(patient)
-    return jsonify(patientList)
+    patient_list = []
+    for patient in nursePQ.values():
+        patient_list.append(patient)
+    return jsonify(patient_list)
 
 @app.route('/get_patient', methods=['GET'])
 def get_patient():
@@ -75,7 +76,6 @@ def accept_patient():
     patient_id = request.args.get('patient_id')
     doctor_id = request.args.get('doctor_id')
     idToPatient[patient_id][accepted] = True
-    patientToProcedures[patient_id] = []
 
 
 	# Return status. This is arbitary.
@@ -104,8 +104,8 @@ def add_procedure():
 def pass_on():
     old_doctor_id = request.args.get('doctor_id')
     patient_id = request.args.get('patient_id')
-    specialty = request.args.get('specialty')
-    old_specialty = idToDoctor[old_doctor_id]['specialty']
+    specialty = request.args.get('specialisation')
+    old_specialty = idToDoctor[old_doctor_id]['specialisation']
     specialisationToPatients[old_specialty].remove(idToPatient[patient_id])
     idToPatient[patient_id]['accepted'] = False
     specialisationToPatients[specialty].append(idToPatient[patient_id])
@@ -116,9 +116,10 @@ def pass_on():
 @app.route('/assign', methods=['POST'])
 def assign():
     patient_id = request.args.get('patient_id')
-    specialty = request.args.get('specialty')
+    specialty = request.args.get('specialisation')
     idToPatient[patient_id]['accepted'] = False
     specialisationToPatients[specialty].append(idToPatient[patient_id])
+    del nursePQ[patient_id]
     # Return status. This is arbitary.
     return jsonify({ "status" : "success" })
 
@@ -169,6 +170,7 @@ def add_patient():
 
 	# Adding the patient to patient list.
     idToPatient[patient_id] = new_patient
+    nursePQ[patient_id] = new_patient
     patientToProcedures[patient_id] = []
 
 	# Return status. This is arbitary.

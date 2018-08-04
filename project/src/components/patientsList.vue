@@ -233,7 +233,7 @@ export default {
             location.reload();
         },
         assignDoctor: function(patient) {
-            var ajax_request = "http://localhost:5000/assign?patient_id=" + patient.patient_id + "&specialty=" + this.selectedSpecialist
+            var ajax_request = "http://localhost:5000/assign?patient_id=" + patient.patient_id + "&specialisation=" + this.selectedSpecialist
 
             this.axios.post(ajax_request)
                 .then(function(response) {
@@ -245,7 +245,7 @@ export default {
             this.text = "Assigned Patient to Specialist"
             this.snackbar = true
             document.getElementById("close1").click()
-
+            location.reload();
         },
         accept: function(patient) {
             var ajax_request = "http://localhost:5000/accept_patient?patient_id=" + patient.patient_id + "&doctor_id=" + this.$cookies.get("userName")

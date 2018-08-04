@@ -118,7 +118,7 @@ export default {
         },
 
         passOn: function() {
-            var ajax_request = "http://localhost:5000/pass_on?patient_id=" + this.patient.patient_id + "&specialty=" + this.selectedSpecialist
+            var ajax_request = "http://localhost:5000/pass_on?patient_id=" + this.patient.patient_id + "&specialisation=" + this.selectedSpecialist + "&doctor_id=" + this.$cookies.get("userName")
 
             this.axios.post(ajax_request)
                 .then(function(response) {
@@ -126,6 +126,8 @@ export default {
                 }).catch(error => {
                     console.log(error.response)
                 });
+            this.dialog = false;
+            this.$router.push('/')
         },
 
         summary: function() {
