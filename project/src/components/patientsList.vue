@@ -29,11 +29,19 @@
                 <v-flex v-for="patient in patients" xs4 id="patient-flex">
                     <v-card id="patient-card">
                         <v-card-title>
-                            <div id="chat-container">
-                                <span class="title">{{patient.name}}</span>
-                                <br>
-                                <span class="body-1" id="time-info">{{patient.priority}}</span>
-                            </div>
+
+                          <div v-if="patient.priority == '3'" id="chat-container">
+                              <span class="title"><h2 style="color: red;">●</h2>{{patient.name}}</span>
+                          </div>
+
+                          <div v-else-if="patient.priority == '2'" id="chat-container">
+                              <span class="title"><h2 style="color: orange;">●</h2>{{patient.name}}</span>
+                          </div>
+
+                          <div v-else-if="patient.priority == '1'" id="chat-container">
+                              <span class="title"><h2 style="color: mediumseagreen;">●</h2>{{patient.name}}</span>
+                          </div>
+
                         </v-card-title>
                         <div id="grey">
                             <v-card-actions>
