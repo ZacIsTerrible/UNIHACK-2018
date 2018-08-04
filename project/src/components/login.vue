@@ -1,7 +1,7 @@
 <template>
+<div id="login-app">
 
-  <h1> This is Login View</h1>
-
+</div>
 </template>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
