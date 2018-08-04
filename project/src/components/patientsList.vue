@@ -12,6 +12,8 @@
           grid-list-lg
         >
           <v-layout align-center justify-start row fill-height>
+
+
             <v-flex xs12>
               <v-card color="blue-grey darken-2" class="white--text">
                 <v-card-title primary-title>
@@ -72,6 +74,11 @@
         </v-container>
       </v-card>
     </div>
+    <v-layout align-end justify-end row fill-height>
+      <v-btn fab dark color="indigo">
+          <v-icon dark>add</v-icon>
+      </v-btn>
+    </v-layout>
   </div>
 
 </template>

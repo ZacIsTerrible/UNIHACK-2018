@@ -1,6 +1,6 @@
 <template>
 
-  <h1> This is Login View</h1>
+  <h1>Procedures</h1>
 
 </template>
 
