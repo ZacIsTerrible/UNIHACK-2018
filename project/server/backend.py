@@ -19,13 +19,13 @@ def get_patient_list():
 
 	patientQueue = specialisationToPatients[specialisation]
 	patientList = []
-    
-    counter = 1
-    while counter < 4:
-    	for patient in patientQueue:
-            if patient['priority'] == counter:
-                patientList.append(patient['name']+":"+patient['patient_id']+":"+patient['priority'])
-        counter = counter + 1
+
+	counter = 1
+	while counter < 4:
+		for patient in patientQueue:
+			if patient['priority'] == counter:
+				patientList.append(patient['name']+":"+patient['patient_id']+":"+patient['priority'])
+		counter = counter + 1
 	return jsonify(patientList)
 
 @app.route('/get_patient', methods=['GET'])
@@ -37,7 +37,7 @@ def get_patient():
 def add_condition():
 	patient_id = request.args.get('patient_id')
 	new_condition = request.args.get('condition')
-	for patient in idToPatient:        
+	for patient in idToPatient:
 		if patient["patient_id"] == patient_id:
 			patient["conditions"].append(new_condition)
 			break
