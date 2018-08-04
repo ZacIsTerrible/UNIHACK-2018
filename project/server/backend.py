@@ -56,18 +56,6 @@ def get_patient():
     patient_id = request.args.get('patient_id')
     return jsonify(idToPatient["patient_id"])
 
-@app.route('/add_condition', methods=['POST'])
-def add_condition():
-	patient_id = request.args.get('patient_id')
-	new_condition = request.args.get('condition')
-	for patient in idToPatient:
-		if patient["patient_id"] == patient_id:
-			patient["conditions"].append(new_condition)
-			break
-
-	# Return status. This is arbitary.
-	return jsonify({ "status" : "success" })
-
 @app.route('/accept_patient', methods=['POST'])
 def accept_patient():
     patient_id = request.args.get('patient_id')
@@ -111,20 +99,30 @@ def pass_on():
 def add_patient():
 
 	# Retrieve the new patient.
-    patient_id = request.args.get('patient_id')
-    name = request.args.get('name')
+    patient_id = len(idToPatient)
+    firstName = request.args.get('firstName')
+    lastName = request.args.get('lastName')
     age = request.args.get('age')
     gender = request.args.get('gender')
     height = request.args.get('height')
     weight = request.args.get('weight')
     emergency_contact = request.args.get('emergency_contact')
     health_insurance = request.args.get('health_insurance')
-    conditions = request.args.get('conditions')
-    accepted = request.args.get('accepted')
-    address = request.address.get('address')
-    medical_history = request.address.get('medical_history')
-    dietary_requirements = request.address.get('dietary_requirements')
-    priority = request.address.get('priority')
+    condition = request.args.get('condition')
+    accepted = False
+    address = request.args.get('address')
+    priority = request.args.get('priority')
+    bloodType = request.args.get('bloodType')
+
+    if priority == "Low":
+        priority = 3
+    elif priority == "Mid":
+        priority = 2
+    elif priority == "High":
+        priority = 1
+
+
+    name = firstName + " " +lastName
 
     new_patient = {
     	'patient_id' : patient_id,
@@ -135,13 +133,14 @@ def add_patient():
 	   'weight' : weight,
 	   'emergency_contact' : emergency_contact,
 	   'health_insurance' : health_insurance,
-	   	'conditions' : conditions.split(','),
+	   	'condition' : condition,
 	   	'accepted' : accepted,
 	   	'address' : address,
-	   	'medical_history' : medical_history,
-	   	'dietary_requirements' : dietary_requirements,
-	   	'priority' : priority
+	   	'priority' : priority,
+        'bloodType' : bloodType
 	}
+
+    print(new_patient)
 
 	# Adding the patient to patient list.
     idToPatient[patient_id] = new_patient
