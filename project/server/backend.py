@@ -140,3 +140,8 @@ def add_doctor():
 
 	# Return status. This is arbitary.
     return jsonify({ "status" : "success" })
+
+@app.route('/dummy')
+def dummy():
+    return jsonify({ "status" : "success" })
+
