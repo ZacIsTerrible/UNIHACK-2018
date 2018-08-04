@@ -45,7 +45,30 @@
                         </v-card-title>
                         <div id="grey">
                             <v-card-actions>
-                                <v-btn flat color="secondary">Accept</v-btn>
+
+                                <v-dialog v-model="assignDialog" persistent max-width="500px">
+
+                                    <v-btn slot="activator" flat color="secondary">Assign Specialist</v-btn>
+                                    <v-card>
+                                        <v-card-title>
+                                            <span class="headline">Select Specialist</span>
+                                        </v-card-title>
+                                        <v-card-text>
+                                            <v-container grid-list-md>
+                                                <v-layout wrap>
+                                                    <v-flex xs12 sm6>
+                                                        <v-autocomplete :items="[]" label="Interests" multiple chips></v-autocomplete>
+                                                    </v-flex>
+                                                </v-layout>
+                                            </v-container>
+                                        </v-card-text>
+                                        <v-card-actions>
+                                            <v-spacer></v-spacer>
+                                            <v-btn color="blue darken-1" flat @click.native="assignDialog = false">Close</v-btn>
+                                            <v-btn color="blue darken-1" flat @click.native="assignDialog = false">Save</v-btn>
+                                        </v-card-actions>
+                                    </v-card>
+                                </v-dialog>
                             </v-card-actions>
                         </div>
                     </v-card>
@@ -53,6 +76,18 @@
             </v-layout>
         </v-container>
     </div>
+
+
+
+
+
+
+
+
+
+
+
+
     <div id="add-positioner">
         <v-container>
             <v-layout align-end justify-end row fill-height>
@@ -112,7 +147,6 @@
 
                                 </v-layout>
                             </v-container>
-                            <small>*indicates required field</small>
                         </v-card-title>
                         <v-card-actions>
                             <v-spacer></v-spacer>
@@ -135,6 +169,7 @@ export default {
     data() {
         return {
             dialog: false,
+            assignDialog:false,
             firstName: null,
             condition: null,
             lastName: null,
@@ -148,23 +183,24 @@ export default {
             insurance: null,
             bloodType: null,
             patients: [],
+            specialists: [],
         }
     },
 
     methods: {
         addPatient: function() {
             var ajax_request_first_half = "http://localhost:5000/add_patient?firstName=" + this.firstName + "&lastName=" + this.lastName + "&emergency_contact=" + this.emergencyContact + "&age=" + this.age + "&gender=" + this.gender + "&height=" + this.height + "&weight=" + this.weight
-            var ajax_request = ajax_request_first_half + "&address=" + this.address + "&health_insurance=" + this.insurance +  "&priority=" + this.priority + "&bloodType=" + this.bloodType + "&condition=" + this.condition;
+            var ajax_request = ajax_request_first_half + "&address=" + this.address + "&health_insurance=" + this.insurance + "&priority=" + this.priority + "&bloodType=" + this.bloodType + "&condition=" + this.condition;
 
             console.log(ajax_request)
             console.log("what")
 
             this.axios.post(ajax_request)
-                    .then(function(response) {
-                        console.log(response);
-                    }).catch(error => {
-                        console.log(error.response)
-                    });
+                .then(function(response) {
+                    console.log(response);
+                }).catch(error => {
+                    console.log(error.response)
+                });
             this.$router.push('/')
         }
     },

@@ -28,6 +28,10 @@ idToDoctor["D*5b652d0f0af548bd5ec0dfbc"] = {
 def get_progress():
     return jsonify(patientToProgress[patient_id])
 
+@app.route('/get_specialisations', methods=['GET'])
+def get_specialisations():
+    return jsonify(specialisationToPatients.keys())
+
 @app.route('/view_procedures', methods=['GET'])
 def view_procedures():
     patient_id = request.args.get('patient_id')
@@ -90,6 +94,19 @@ def add_procedure():
     return jsonify({ "status" : "success" })
 
 @app.route('/pass_on', methods=['POST'])
+def pass_on():
+    patient_id = request.args.get('patient_id')
+    old_doctor_id = request.args.get('old_doctor_id')
+    new_doctor_id = request.args.get('new_doctor_id')
+    specialty = idToDoctor[new_doctor_id][specialty]
+    idToPatient[patient_id][accepted] = False
+    specialisationToPatients[specialty] = idToPatient[patient_id]
+    del doctorToPatient[old_doctor_id]
+
+    # Return status. This is arbitary.
+    return jsonify({ "status" : "success" })
+
+@app.route('/assign', methods=['POST'])
 def pass_on():
     patient_id = request.args.get('patient_id')
     old_doctor_id = request.args.get('old_doctor_id')
