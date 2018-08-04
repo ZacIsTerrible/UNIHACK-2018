@@ -14,19 +14,18 @@ specialisationToPatients = {}
 # API
 @app.route('/get_patient_list', methods=['GET'])
 def get_patient_list():
-	doctor_id = request.args.get('doctor_id')
-	specialisation = idToDoctor[doctor_id]['specialisation']
+    doctor_id = request.args.get('doctor_id')
+    specialisation = idToDoctor[doctor_id]['specialisation']
+    patientQueue = specialisationToPatients[specialisation]
+    patientList = []
 
-	patientQueue = specialisationToPatients[specialisation]
-	patientList = []
-    
     counter = 1
     while counter < 4:
-    	for patient in patientQueue:
-            if patient['priority'] == counter:
+        for patient in patientQueue:
+            if patient['priority'] == counter and patient['accepted'] == False:
                 patientList.append(patient['name']+":"+patient['patient_id']+":"+patient['priority'])
         counter = counter + 1
-	return jsonify(patientList)
+    return jsonify(patientList)
 
 @app.route('/get_patient', methods=['GET'])
 def get_patient():
@@ -77,13 +76,13 @@ def add_patient():
 
     new_patient = {
     	'patient_id' : patient_id,
-	    'name' : name,
-	    'age' : age,
-	    'gender' : gender,
-	    'height' : height,
-	    'weight' : weight,
-	    'emergency_contact' : emergency_contact,
-	    'health_insurance' : health_insurance,
+	   'name' : name,
+	   'age' : age,
+	   'gender' : gender,
+	   'height' : height,
+	   'weight' : weight,
+	   'emergency_contact' : emergency_contact,
+	   'health_insurance' : health_insurance,
 	   	'conditions' : conditions.split(','),
 	   	'accepted' : accepted,
 	   	'address' : address,
@@ -100,26 +99,26 @@ def add_patient():
 
 @app.route('/add_doctor', methods=['POST'])
 def add_doctor():
+    doctor_id = request.args.get('doctor_id')
+    name = request.args.get('name')
+    age = request.args.get('age')
+    gender = request.args.get('gender')
+    specialisation = request.args.get('specialisation')
 
-	doctor_id = request.args.get('doctor_id')
-	name = request.args.get('name')
-	age = request.args.get('age')
-	gender = request.args.get('gender')
-	specialisation = request.args.get('specialisation')
-
-	new_doctor = {
+    print(doctor_id + " " + name + " " + age + " " + gender + " " + specialisation)
+    new_doctor = {
 		'doctor_id' : doctor_id,
 		'name' : name,
 		'age' : age,
 		'gender' : gender,
 		'specialisation' : specialisation
 	}
-
-	idToDoctor[doctor_id] = new_doctor
+    idToDoctor[doctor_id] = new_doctor
 
 	#if we haven't seen the specialisation before create a new PQ of patients
-	if specialisation not in specialisationToPatients.keys():
-		specialisationToPatients[specialisation] = []
+    if specialisation not in specialisationToPatients.keys():
+        specialisationToPatients[specialisation] = []
 
 	# Return status. This is arbitary.
-	return jsonify({ "status" : "success" })
+    return jsonify({ "status" : "success" })
+app.run()
