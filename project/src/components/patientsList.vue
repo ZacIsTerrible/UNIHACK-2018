@@ -33,15 +33,21 @@
                         <v-card-title>
 
                             <div v-if="patient.priority == '3'" id="chat-container">
-                                <span class="title"><h2 style="color: red;">●</h2>{{patient.name}}</span>
+                                <span class="title">{{patient.name}}   </span><span style="color: red;" class="headline">●</span>
+                                <br>
+                                <span class="subtitle">{{patient.condition}}</span>
                             </div>
 
                             <div v-else-if="patient.priority == '2'" id="chat-container">
-                                <span class="title"><h2 style="color: orange;">●</h2>{{patient.name}}</span>
+                                <span class="title">{{patient.name}}   </span><span style="color: orange;" class="headline">●</span>
+                                <br>
+                                <span class="subtitle">{{patient.condition}}</span>
                             </div>
 
                             <div v-else-if="patient.priority == '1'" id="chat-container">
-                                <span class="title"><h2 style="color: mediumseagreen;">●</h2>{{patient.name}}</span>
+                                <span class="title">{{patient.name}}   </span><span style="color: mediumseagreen;" class="headline">●</span>
+                                <br>
+                                <span class="subtitle">{{patient.condition}}</span>
                             </div>
 
                         </v-card-title>
