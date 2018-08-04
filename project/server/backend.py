@@ -15,7 +15,17 @@ patientList = []
 def get_patient_list():
     return jsonify(patientList)
 
-@app.route('/get_patient_list', methods=['GET'])
+@app.route('/add_condition', methods=['GET'])
+def add_condition():
+	patient_id = request.args.get('patient_id')
+	new_condition = request.args.get('condition')
+	for patient in paitentList:
+		if patient["patient_id"] == patient_id:
+			patient["conditions"].append(new_condition)
+			break
+			
+	# Return status. This is arbitary.
+	return jsonify({ "status" : "success" })
 
 @app.route('/add_patient', methods=['POST'])
 def add_patient():
@@ -29,7 +39,7 @@ def add_patient():
     weight = request.args.get('weight')
     emergency_contact = request.args.get('emergency_contact')
 	health_insurance = request.args.get('health_insurance')
-    condition = request.args.get('condition')
+    conditions = request.args.get('conditions')
     accepted = request.args.get('accepted')
     address = request.address.get('address')
     medical_history = request.address.get('medical_history')
@@ -44,7 +54,7 @@ def add_patient():
 	    'weight' : weight,
 	    'emergency_contact' : emergency_contact,
 	    'health_insurance' : health_insurance,
-	   	'condition' : condition,
+	   	'conditions' : conditions.split(','),
 	   	'accepted' : accepted,
 	   	'address' : address,
 	   	'medical_history' : medical_history,
