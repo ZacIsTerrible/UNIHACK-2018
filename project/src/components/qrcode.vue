@@ -56,7 +56,7 @@ export default {
     },
     methods: {
         onDecode(decodedString) {
-            this.$router.push('/')
+            this.$router.push('/patient/' + decodedString)
             console.log(decodedString)
         }
     }
