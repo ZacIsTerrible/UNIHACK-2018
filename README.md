@@ -13,8 +13,9 @@ Just another student team competing at [UNIHACK Sydney](https://unihack.net/sydn
 ***
 
 ## PROJECT CHECKWRIST
-
+<p align="center">
 <img src="https://github.com/edwinchau/UNIHACK2018/blob/master/CheckWrist%20Logo.png?raw=true" width="300">
+</p>
 
 CheckWrist allows for medical personnel to attach smart checklists to patient profiles for real-time tracking and to allow for easy sharing of patient status and current procedure stage information between all types of medical personnel. It combines this functionality with the ability to prioritise patients and filter out information irrelevant to different specialised medical personnel. One of the key benefits is to allow medical personnel to quickly and efficiently share information about patients with relevant personnel, ensuring no steps are missed and time wasted debriefing or finding people to be debriefed about a patient is eliminated. 
 
