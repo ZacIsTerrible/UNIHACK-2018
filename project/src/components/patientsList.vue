@@ -26,13 +26,13 @@
     <div id="container">
         <v-container grid-list-xl text-xs-left>
             <v-layout row wrap>
-                <v-flex v-for="i in 24" xs4 id="patient-flex">
+                <v-flex v-for="patient in patients" xs4 id="patient-flex">
                     <v-card id="patient-card">
                         <v-card-title>
                             <div id="chat-container">
-                                <span class="title">Sam Arch</span>
+                                <span class="title">{{patient.name}}</span>
                                 <br>
-                                <span class="body-1" id="time-info">Name</span>
+                                <span class="body-1" id="time-info">{{patient.priority}}</span>
                             </div>
                         </v-card-title>
                         <div id="grey">
@@ -139,6 +139,7 @@ export default {
             address: null,
             insurance: null,
             bloodType: null,
+            patients: [],
         }
     },
 
@@ -156,7 +157,19 @@ export default {
                     }).catch(error => {
                         console.log(error.response)
                     });
+            this.$router.push('/')
         }
+    },
+
+    mounted: function() {
+
+        this.$nextTick(function() {
+            this.axios
+                .get("http://localhost:5000/get_all_patients")
+                .then((response) => {
+                    this.patients = response.data
+                })
+        })
     }
 }
 

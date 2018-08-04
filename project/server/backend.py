@@ -51,6 +51,13 @@ def get_patient_list():
         counter = counter + 1
     return jsonify(patientList)
 
+@app.route('/get_all_patients', methods=['GET'])
+def get_all_patients():
+    patientList = []
+    for patient in idToPatient.values():
+        patientList.append(patient)
+    return jsonify(patientList)
+
 @app.route('/get_patient', methods=['GET'])
 def get_patient():
     patient_id = request.args.get('patient_id')
@@ -99,7 +106,7 @@ def pass_on():
 def add_patient():
 
 	# Retrieve the new patient.
-    patient_id = len(idToPatient)
+    patient_id = str(len(idToPatient))
     firstName = request.args.get('firstName')
     lastName = request.args.get('lastName')
     age = request.args.get('age')
