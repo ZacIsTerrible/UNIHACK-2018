@@ -8,6 +8,7 @@ CORS(app)
 # Data Stores
 patientList = []
 doctorsList = []
+specialtyToPatients = {}
 
 
 # API
