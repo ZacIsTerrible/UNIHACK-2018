@@ -87,12 +87,12 @@ input[type=submit]:hover {
 					<h1>Login</h1>
 
 					<div id="inputs">
-					  <form action="login">
+					  <form>
 					    <input type="text" id="uname" name="username" placeholder="Username">
 
 					    <input type="password" id="pword" name="password" placeholder="Password">
 
-					    <input type="submit" value="Login">
+					    <input type="submit" value="Login" v-on:click="login">
 					  </form>
 					</div>
 
