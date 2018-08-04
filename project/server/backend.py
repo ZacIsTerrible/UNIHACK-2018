@@ -21,10 +21,9 @@ def get_patient_list():
 	patientList = []
 
 	for patient in patientQueue:
-
-
-
-    return jsonify(specialisationToPatients[specialisation])
+		patientList.append(patient['name']+":"+patient['patient_id']+":"+patient['priority'])
+		
+    return jsonify(patientList)
 
 @app.route('/get_patient', methods=['GET'])
 def get_patient():

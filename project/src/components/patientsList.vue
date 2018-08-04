@@ -95,14 +95,14 @@
                 </v-flex>
                 <v-flex xs12 sm6 md4>
                   <v-text-field
-                    label="Legal last name"
-                    hint="example of persistent helper text"
-                    persistent-hint
-                    required
-                  ></v-text-field>
+                    label="Legal last name" required></v-text-field>
                 </v-flex>
                 <v-flex xs12>
-                  <v-text-field label="Emergency Contact" required></v-text-field>
+                  <v-text-field label="Emergency Contact"
+                  hint="Phone number of emergency contact person."
+                  persistent-hint
+                  required>
+                </v-text-field>
                 </v-flex>
 
                 <v-flex xs12 sm6>
@@ -139,7 +139,15 @@
                 </v-flex>
 
                 <v-flex xs12>
-                  <v-text-field label="Health insurance" required></v-text-field>
+                  <v-text-field label="Conditions" required></v-text-field>
+                </v-flex>
+
+                <v-flex xs12>
+                  <v-text-field label="Medical History" required></v-text-field>
+                </v-flex>
+
+                <v-flex xs12>
+                  <v-text-field label="Dietary Requirements" required></v-text-field>
                 </v-flex>
 
 

@@ -75,6 +75,7 @@ input[type=submit]:hover {
 	<div v-if="isLoggedIn" id="pwa-view">
 		<v-toolbar app:clipped-left="clipped" color="primary" id="toolbar-style">
 		  <v-toolbar-title v-text="title"></v-toolbar-title>
+      <v-spacer></v-spacer>
       <a href="/#"><v-btn flat color="accent" v-on:click="logout">Log Out</v-btn></a>
 		</v-toolbar>
 		<v-content>
