@@ -17,8 +17,8 @@
               <v-btn v-on:click="summary">Summary</v-btn>
               <v-btn v-on:click="doctor_log">Doctor Log</v-btn>
               <v-btn v-on:click="view_procedures">View Procedures</v-btn>
-              <v-btn v-on:click="pass_on">Pass On</v-btn>
-              <v-btn v-on:click="complete">Complete</v-btn>
+              <v-btn color="warning" v-on:click="pass_on">Pass On</v-btn>
+              <v-btn color="success" v-on:click="complete">Complete</v-btn>
             </v-layout>
             <br>
             <v-layout row wrap>
