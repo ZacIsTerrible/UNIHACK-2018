@@ -4,36 +4,53 @@
     padding: 20px;
 }
 
+#add-positioner {
+    position: fixed;
+    right: 20px;
+    bottom: 0px;
+}
+
+#time-info {
+    color: grey;
+}
+
+#grey {
+    background-color: #EEEEEE;
+}
+
 </style>
 
 <template>
 
 <div id="app">
     <div id="container">
-        <v-container grid-list-md text-xs-center>
+        <v-container grid-list-xl text-xs-left>
             <v-layout row wrap>
-                <v-flex v-for="i in 8" xs4 id="patient-flex">
+                <v-flex v-for="i in 24" xs4 id="patient-flex">
                     <v-card id="patient-card">
-                        <v-card-title primary-title>
-                            <div>
-                                <h3 class="headline mb-0">Kangaroo Valley Safari</h3>
-                                <div>Located two hours south of Sydney in the
-                                    <br>Southern Highlands of New South Wales, ...</div>
+                        <v-card-title>
+                            <div id="chat-container">
+                                <span class="title">Sam Arch</span>
+                                <br>
+                                <span class="body-1" id="time-info">Name</span>
                             </div>
                         </v-card-title>
-
-                        <v-card-actions>
-                            <v-btn flat color="orange">Share</v-btn>
-                            <v-btn flat color="orange">Explore</v-btn>
-                        </v-card-actions>
+                        <div id="grey">
+                            <v-card-actions>
+                                <v-btn flat color="secondary">Share</v-btn>
+                                <v-btn flat color="secondary">Explore</v-btn>
+                            </v-card-actions>
+                        </div>
                     </v-card>
                 </v-flex>
             </v-layout>
         </v-container>
+    </div>
+    <div id="add-positioner">
         <v-container>
             <v-layout align-end justify-end row fill-height>
                 <v-dialog v-model="dialog" persistent max-width="500px">
-                    <v-btn slot="activator" fab dark color="indigo">
+                    <v-btn slot="activator" fab dark color="secondary">
                         <v-icon dark>add</v-icon>
                     </v-btn>
                     <v-card>
@@ -97,7 +114,6 @@
                         </v-card-actions>
                     </v-card>
                 </v-dialog>
-
             </v-layout>
         </v-container>
     </div>
