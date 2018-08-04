@@ -1,0 +1,12 @@
+[
+  '{{repeat(5, 5)}}',
+  {
+    doctor_id: 'D*{{objectId()}}',
+    name: '{{firstName()}} {{surname()}}',
+    age: '{{integer(30, 60)}}',
+    gender: '{{gender()}}',
+    specialisation: 'xyz'
+  }
+]
+
+// https://www.json-generator.com/
