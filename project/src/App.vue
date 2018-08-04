@@ -1,5 +1,6 @@
 <style scoped>
 
+
 #toolbar-style {
     color: white
 }
@@ -70,20 +71,30 @@ input[type=submit]:hover {
     padding-right: 25%;
 }
 
+#placeholder-div {
+    margin-top: 70px;
+}
+
+#pwa-view {
+    height:100%;
+}
+
 </style>
 
 <template>
 
 <v-app>
-
+<div>
     <div v-if="isLoggedIn" id="pwa-view">
-        <v-toolbar app:clipped-left="clipped" color="primary" id="toolbar-style">
+        <v-toolbar app:clipped-left="clipped" color="primary" id="toolbar-style" fixed>
             <v-toolbar-title v-text="title"></v-toolbar-title>
             <v-spacer></v-spacer>
             <a href="/#">
                 <v-btn flat color="accent" v-on:click="logout">Log Out</v-btn>
             </a>
         </v-toolbar>
+        <div id="placeholder-div">
+        </div>
         <v-content>
             <router-view/>
         </v-content>
@@ -107,7 +118,7 @@ input[type=submit]:hover {
             </div>
         </v-layout>
     </div>
-
+</div>
 </v-app>
 
 </template>
