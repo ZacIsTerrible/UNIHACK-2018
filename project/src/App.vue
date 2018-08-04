@@ -30,7 +30,7 @@
 	</div>
 
 	<div v-else id="login-view">
-      
+
 	</div>
 
   </v-app>
@@ -44,7 +44,7 @@ export default {
       drawer: true,
       fixed: false,
       title: 'CheckWrist',
-      isLoggedIn: false
+      isLoggedIn: true
     }
   },
   name: 'App'
