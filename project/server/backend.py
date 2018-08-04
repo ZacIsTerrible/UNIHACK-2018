@@ -21,10 +21,9 @@ def get_patient_list():
 	patientList = []
 
 	for patient in patientQueue:
-
-
-
-    return jsonify(specialisationToPatients[specialisation])
+		patientList.append(patient['name']+":"+patient['patient_id']+":"+patient['priority'])
+		
+    return jsonify(patientList)
 
 @app.route('/get_patient', methods=['GET'])
 def get_patient():
@@ -60,6 +59,7 @@ def add_patient():
     address = request.address.get('address')
     medical_history = request.address.get('medical_history')
     dietary_requirements = request.address.get('dietary_requirements')
+    priority = request.address.get('priority')
 
     new_patient = {
     	'patient_id' : patient_id,
@@ -74,7 +74,8 @@ def add_patient():
 	   	'accepted' : accepted,
 	   	'address' : address,
 	   	'medical_history' : medical_history,
-	   	'dietary_requirements' : dietary_requirements
+	   	'dietary_requirements' : dietary_requirements,
+	   	'priority' : priority
 	}
 
 	# Adding the patient to patient list.
