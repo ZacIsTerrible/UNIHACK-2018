@@ -22,7 +22,7 @@ export default new Router({
       component: dashboard
     },
     {
-      path: '/procedure',
+      path: '/patient/:id/procedure',
       name: 'procedure',
       component: procedures
     },

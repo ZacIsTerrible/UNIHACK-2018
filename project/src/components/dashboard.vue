@@ -1,49 +1,125 @@
-<template>
-
-<div id="dashboard">
-  <h1>Patient Info</h1>
-
-  <h2>Administration Information</h2>
-  <h3>Name: {{patient_name}}</h3>
-  <h3>Age: {{patient_age}}</h3>
-  <h3>Gender: {{patient_gender}}</h3>
-  <h3>Height: {{patient_height}}</h3>
-  <h3>Weight: {{patient_weight}}</h3>
-  <h3>Address: {{patient_address}}</h3>
-  <h3>Emergency Contact: {{patient_emergency_contact}}</h3>
-  <h3>Health Insurance: {{patient_health_insurance}}</h3>
-  <h3>Blood Type: {{patient_blood_type}}</h3>
-  <h3>Current Condition: {{patient_current_condition}}</h3>
-  <h3>Medical History: {{patient_medical_history}}</h3>
-  <h3>Dietary Requirements: {{patient_dietary_requirments}}</h3>
-</div>
-</template>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+
+
 
 </style>
 
-<script>
-export default{
-  name: 'dashboard',
-  data () {
-    return {
-      patient_name: 'alex',
-      patient_age: '16',
-      patient_gender: 'Male',
-      patient_height: '160cm',
-      patient_weight: '61kg',
-      patient_address: '67 Tree St, NSW',
-      patient_emergency_contact: '0455739990',
-      patient_health_insurance: 'Bupa',
-      patient_blood_type: 'O-',
-      patient_current_condition: 'Broken Arm',
-      patient_medical_history: 'None',
-      patient_dietary_requirments: 'None'
+<template>
 
+<div id="dashboard">
+
+    <v-app id="inspire">
+
+        <v-container grid-list-xl>
+            <h1>Patient Info</h1>
+            <h2>Administration Information</h2>
+            <v-layout v-bind="binding">
+                <v-flex>
+                    <v-card dark color="primary">
+                        <v-card-text>Name: {{patient_name}}</v-card-text>
+                    </v-card>
+                </v-flex>
+                <v-flex>
+                    <v-card dark color="secondary">
+                        <v-card-text>Age: {{patient_age}}</v-card-text>
+                    </v-card>
+                </v-flex>
+                <v-flex>
+                    <v-card dark color="accent">
+                        <v-card-text>Gender: {{patient_gender}}</v-card-text>
+                    </v-card>
+                </v-flex>
+                <v-flex>
+                    <v-card dark color="accent">
+                        <v-card-text>Height: {{patient_height}}</v-card-text>
+                    </v-card>
+                </v-flex>
+                <v-flex>
+                    <v-card dark color="accent">
+                        <v-card-text>Weight: {{patient_weight}}</v-card-text>
+                    </v-card>
+                </v-flex>
+                <v-flex>
+                    <v-card dark color="accent">
+                        <v-card-text>Address: {{patient_address}}</v-card-text>
+                    </v-card>
+                </v-flex>
+
+                <v-flex>
+                    <v-card dark color="accent">
+                        <v-card-text>Emergency Contact: {{patient_emergency_contact}}</v-card-text>
+                    </v-card>
+                </v-flex>
+
+                <v-flex>
+                    <v-card dark color="accent">
+                        <v-card-text>Health Insurance: {{patient_health_insurance}}</v-card-text>
+                    </v-card>
+                </v-flex>
+
+                <v-flex>
+                    <v-card dark color="accent">
+                        <v-card-text>Blood Type: {{patient_blood_type}}</v-card-text>
+                    </v-card>
+                </v-flex>
+
+                <v-flex>
+                    <v-card dark color="accent">
+                        <v-card-text>Current Condition: {{patient_current_condition}}</v-card-text>
+                    </v-card>
+                </v-flex>
+
+                <v-flex>
+                    <v-card dark color="accent">
+                        <v-card-text>Medical History: {{patient_medical_history}}</v-card-text>
+                    </v-card>
+                </v-flex>
+
+                <v-flex>
+                    <v-card dark color="accent">
+                        <v-card-text>Dietary Requirements: {{patient_dietary_requirments}}</v-card-text>
+                    </v-card>
+                </v-flex>
+
+            </v-layout>
+        </v-container>
+    </v-app>
+</div>
+
+</template>
+
+<script>
+
+export default {
+    name: 'dashboard',
+    data() {
+        return {
+            patient_name: 'alex',
+            patient_age: '16',
+            patient_gender: 'Male',
+            patient_height: '160cm',
+            patient_weight: '61kg',
+            patient_address: '67 Tree St, NSW',
+            patient_emergency_contact: '0455739990',
+            patient_health_insurance: 'Bupa',
+            patient_blood_type: 'O-',
+            patient_current_condition: 'Broken Arm',
+            patient_medical_history: 'None',
+            patient_dietary_requirments: 'None'
+
+        }
+
+    },
+    computed: {
+        binding() {
+            const binding = {}
+
+            if (this.$vuetify.breakpoint.mdAndUp) binding.column = true
+
+            return binding
+        }
     }
-  }
 
 }
+
 </script>
