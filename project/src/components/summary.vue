@@ -1,6 +1,8 @@
 <template>
-
-  <h1> This is Login View</h1>
+<div id="summary">
+  <h1>{{patient_name}}</h1>
+  <p>{{patient_summary}}</p>
+</div>
 
 </template>
 
@@ -11,6 +13,13 @@
 
 <script>
 export default{
-  name: 'summary'
+  name: 'summary',
+  data () {
+    return {
+      patient_name: 'dkj',
+      patient_summary: 'sdsdf'
+
+    }
+  }
 }
 </script>
