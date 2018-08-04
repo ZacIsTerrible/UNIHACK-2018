@@ -12,9 +12,18 @@
 
         <v-container grid-list-md>
             <h1>{{patient_name}}'s Info</h1>
+            <h2>Actions</h2>
+            <v-layout row wrap>
+              <v-btn v-on:click="summary">Summary</v-btn>
+              <v-btn v-on:click="doctor_log">Doctor Log</v-btn>
+              <v-btn v-on:click="view_procedures">View Procedures</v-btn>
+              <v-btn v-on:click="pass_on">Pass On</v-btn>
+              <v-btn v-on:click="complete">Complete</v-btn>
+            </v-layout>
+            <br>
             <v-layout row wrap>
                 <v-flex xs4>
-                    <h2>Features</h2>
+                    <h2>Profile</h2>
                     <v-card dark color="primary">
                         <v-card-text>Age: {{patient_age}}</v-card-text>
                         <v-card-text>Gender: {{patient_gender}}</v-card-text>
@@ -43,8 +52,11 @@
                   </v-card>
               </v-flex>
             </v-layout>
+          </v-layout>
         </v-container>
+
     </v-app>
+
 </div>
 
 </template>
