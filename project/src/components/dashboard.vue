@@ -5,7 +5,7 @@
     <v-app id="inspire">
 
         <v-container grid-list-md>
-            <h1>{{patient_name}}'s Info</h1>
+            <h1>{{patient_name}}'s Medical Information</h1>
             <h2>Actions</h2>
             <v-layout row wrap>
               <v-btn v-on:click="summary">Summary</v-btn>
@@ -30,12 +30,19 @@
 
                 <v-flex xs4>
                     <h2>Administrative Information</h2>
-                    <v-card dark color = darkgray>
+                    <v-card dark color = "lightgray">
                         <v-card-text>Address: {{patient_address}}</v-card-text>
                         <v-card-text>Emergency Contact: {{patient_emergency_contact}}></v-card-text>
                         <v-card-text>Health Insurance: {{patient_health_insurance}}</v-card-text>
                     </v-card>
                 </v-flex>
+                <v-flex xs4>
+                    <h2>Current Condition</h2>
+                    <v-card dark color = "lightgray">
+                        <v-card-text>{{patient_current_condition}}</v-card-text>
+                    </v-card>
+                </v-flex>
+
             </v-layout>
 
             <v-layout row wrap>
@@ -65,7 +72,7 @@ export default{
   name: 'dashboard',
   data () {
     return {
-      patient_name: 'alex',
+      patient_name: 'Alex',
       patient_age: '16',
       patient_gender: 'Male',
       patient_height: '160cm',
@@ -76,7 +83,7 @@ export default{
       patient_blood_type: 'O-',
       patient_current_condition: 'Broken Arm',
       patient_medical_history: 'None',
-      patient_dietary_requirments: 'None'
+      patient_dietary_requirments: 'None',
 
     }
   }
