@@ -2,7 +2,7 @@
  {
    "Step_Number": "1",
    "Task_Description": "Connect ECG, ART, PAP and SpO2 modules and cables to bedside monitor",
-   "Timer": ""
+   "Timer": "0 minutes"
  },
  {
    "Step_Number": "2",
@@ -12,7 +12,7 @@
  {
    "Step_Number": "3",
    "Task_Description": "Monitor and manage HR, BP, CVP, PAP, and SpO2",
-   "Timer": ""
+   "Timer": "0 minutes"
  },
  {
    "Step_Number": "4",
@@ -22,12 +22,12 @@
  {
    "Step_Number": "5",
    "Task_Description": "Check alarms are on and limits set appropriately",
-   "Timer": ""
+   "Timer": "0 minutes"
  },
  {
    "Step_Number": "6",
    "Task_Description": "Check all infusions are correctly labelled and running via appropriate lumens and at rates: add columns for rates here",
-   "Timer": ""
+   "Timer": "0 minutes"
  },
  {
    "Step_Number": "7",
@@ -37,41 +37,41 @@
  {
    "Step_Number": "8",
    "Task_Description": "Check position of PA catheter as per black markings at insertion site (usually between 50-60cms) and record on flowchart",
-   "Timer": ""
+   "Timer": "0 minutes"
  },
  {
    "Step_Number": "9",
    "Task_Description": "Check catheter is wedging and secure catheter to patient’s chest",
-   "Timer": ""
+   "Timer": "0 minutes"
  },
  {
    "Step_Number": "10",
    "Task_Description": "Check that PA trace on monitor is a pulmonary artery trace",
-   "Timer": ""
+   "Timer": "0 minutes"
  },
  {
    "Step_Number": "11",
    "Task_Description": "Change pacemaker from Biotronic to Medtronic pacemaker",
-   "Timer": ""
+   "Timer": "0 minutes"
  },
  {
    "Step_Number": "12",
    "Task_Description": "Check pacing wires are secured in the connector block and the lead pins are tight in the pacemaker",
-   "Timer": ""
+   "Timer": "0 minutes"
  },
  {
    "Step_Number": "13",
    "Task_Description": "Check correct polarity of lead pins, blue to blue and red to red",
-   "Timer": ""
+   "Timer": "0 minutes"
  },
  {
    "Step_Number": "14",
    "Task_Description": " Check that the leads are connected to the correct chamber, atrial to right of the\npatient’s sternum, ventricular to left of the patient’s sternum",
-   "Timer": ""
+   "Timer": "0 minutes"
  },
  {
    "Step_Number": "15",
    "Task_Description": "Check pacemaker settings are on: Insert Picture",
-   "Timer": ""
+   "Timer": "0 minutes"
  }
 ]

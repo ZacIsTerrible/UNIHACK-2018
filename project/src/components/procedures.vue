@@ -21,7 +21,7 @@
 
                             <v-list-tile-content @click="check = !check">
                                 <v-list-tile-title>{{ data.Task_Description }}</v-list-tile-title>
-                                <v-list-tile-sub-title>{{data.Timer}}</v-list-tile-sub-title>
+                                <v-list-tile-sub-title>Time Required: {{data.Timer}}</v-list-tile-sub-title>
 
                             </v-list-tile-content>
                         </v-list-tile>
