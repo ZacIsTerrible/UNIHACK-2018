@@ -39,7 +39,6 @@ def get_patient():
 def add_condition():
 	patient_id = request.args.get('patient_id')
 	new_condition = request.args.get('condition')
-	for patient in idToPatient:        
 		if patient["patient_id"] == patient_id:
 			patient["conditions"].append(new_condition)
 			break
