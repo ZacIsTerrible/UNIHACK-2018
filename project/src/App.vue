@@ -70,6 +70,10 @@ input[type=submit]:hover {
     padding-right: 25%;
 }
 
+#spacing {
+    margin: 60px;
+}
+
 </style>
 
 <template>
@@ -77,13 +81,15 @@ input[type=submit]:hover {
 <v-app>
 
     <div v-if="isLoggedIn" id="pwa-view">
-        <v-toolbar app:clipped-left="clipped" color="primary" id="toolbar-style">
+        <v-toolbar app:clipped-left="clipped" color="primary" id="toolbar-style" fixed>
             <v-toolbar-title v-text="title"></v-toolbar-title>
             <v-spacer></v-spacer>
             <a href="/#">
                 <v-btn flat color="accent" v-on:click="logout">Log Out</v-btn>
             </a>
         </v-toolbar>
+        <div id="spacing">
+        </div>
         <v-content>
             <router-view/>
         </v-content>

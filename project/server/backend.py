@@ -67,7 +67,9 @@ def get_all_patients():
 @app.route('/get_patient', methods=['GET'])
 def get_patient():
     patient_id = request.args.get('patient_id')
-    return jsonify(idToPatient["patient_id"])
+    print(patient_id)
+    print(idToPatient)
+    return jsonify(idToPatient[patient_id])
 
 @app.route('/accept_patient', methods=['POST'])
 def accept_patient():
