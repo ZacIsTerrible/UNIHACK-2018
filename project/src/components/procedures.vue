@@ -1,3 +1,9 @@
+<style scoped>
+
+
+
+</style>
+
 <template>
 
 <div id="app">
@@ -15,11 +21,12 @@
                             </v-list-tile-action>
 
                             <v-list-tile-content @click="notifications = !notifications">
-                                <v-list-tile-title>{{ data.Task_Decription }}</v-list-tile-title>
+                                <v-list-tile-title>{{ data.Task_Description }}</v-list-tile-title>
+
 
 
                             </v-list-tile-content>
-                        </v-list-tile>
+                            </v-list-tile>
                     </v-list>
 
 
@@ -30,18 +37,17 @@
 
     </v-app>
     <v-layout align-end justify-end row reverse fill-height/>
-      <div>
+    <div>
         <v-btn color="orange darken-2" dark>
             <v-icon dark left>arrow_back</v-icon>Back
-          </v-btn>
-      </div>
-  </div>
-
+        </v-btn>
+    </div>
+</div>
 
 </template>
 
-
 <script>
+
 import json from '../../server/checklistData.json'
 export default {
     name: 'procedures',
@@ -51,8 +57,7 @@ export default {
             notifications: false
 
         }
+    }
+}
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-
-</style>
+</script>
