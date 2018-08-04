@@ -39,6 +39,7 @@ def get_patient():
 def add_condition():
 	patient_id = request.args.get('patient_id')
 	new_condition = request.args.get('condition')
+	for patient in idToPatient:
 		if patient["patient_id"] == patient_id:
 			patient["conditions"].append(new_condition)
 			break
@@ -139,3 +140,5 @@ def add_doctor():
 
 	# Return status. This is arbitary.
     return jsonify({ "status" : "success" })
+
+app.run()
