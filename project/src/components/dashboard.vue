@@ -1,9 +1,3 @@
-<style scoped>
-
-
-
-</style>
-
 <template>
 
 <div id="dashboard">
@@ -17,8 +11,8 @@
               <v-btn v-on:click="summary">Summary</v-btn>
               <v-btn v-on:click="doctor_log">Doctor Log</v-btn>
               <v-btn v-on:click="view_procedures">View Procedures</v-btn>
-              <v-btn v-on:click="pass_on">Pass On</v-btn>
-              <v-btn v-on:click="complete">Complete</v-btn>
+              <v-btn color="warning" v-on:click="pass_on">Pass On</v-btn>
+              <v-btn color="success" v-on:click="complete">Complete</v-btn>
             </v-layout>
             <br>
             <v-layout row wrap>
@@ -57,42 +51,35 @@
 
     </v-app>
 
-</div>
 
+</div>
 </template>
 
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style scoped>
+
+</style>
+
 <script>
+export default{
+  name: 'dashboard',
+  data () {
+    return {
+      patient_name: 'alex',
+      patient_age: '16',
+      patient_gender: 'Male',
+      patient_height: '160cm',
+      patient_weight: '61kg',
+      patient_address: '67 Tree St, NSW',
+      patient_emergency_contact: '0455739990',
+      patient_health_insurance: 'Bupa',
+      patient_blood_type: 'O-',
+      patient_current_condition: 'Broken Arm',
+      patient_medical_history: 'None',
+      patient_dietary_requirments: 'None'
 
-export default {
-    name: 'dashboard',
-    data() {
-        return {
-            patient_name: 'Alex',
-            patient_age: '16',
-            patient_gender: 'Male',
-            patient_height: '160cm',
-            patient_weight: '61kg',
-            patient_address: '67 Tree St, NSW',
-            patient_emergency_contact: '0455739990',
-            patient_health_insurance: 'Bupa',
-            patient_blood_type: 'O-',
-            patient_current_condition: 'Broken Arm',
-            patient_medical_history: 'None',
-            patient_dietary_requirments: 'None'
-
-        }
-
-    },
-    computed: {
-        binding() {
-            const binding = {}
-
-            if (this.$vuetify.breakpoint.mdAndUp) binding.column = true
-
-            return binding
-        }
     }
+  }
 
 }
-
 </script>

@@ -12,25 +12,29 @@
             <v-flex xs12 sm6 offset-sm3>
                 <v-card>
 
-                    <v-list subheader two-line>
-                        <v-subheader>Hangout notifications</v-subheader>
+                    <v-list v-for="data in myJson" subheader two-line>
 
-                        <v-list-tile @click="">
+
+                        <v-list-tile@click="">
                             <v-list-tile-action>
                                 <v-checkbox v-model="notifications"></v-checkbox>
                             </v-list-tile-action>
 
                             <v-list-tile-content @click="notifications = !notifications">
-                                <v-list-tile-title>Notifications</v-list-tile-title>
-                                <v-list-tile-sub-title>Allow notifications</v-list-tile-sub-title>
-                                <v-btn v-on:click="read">send</v-btn>
+                                <v-list-tile-title>{{ data.Task_Description }}</v-list-tile-title>
+
+
+
                             </v-list-tile-content>
-                        </v-list-tile>
+                            </v-list-tile>
                     </v-list>
+
+
 
                 </v-card>
             </v-flex>
         </v-layout>
+
     </v-app>
     <v-layout align-end justify-end row reverse fill-height/>
     <div>
@@ -44,20 +48,14 @@
 
 <script>
 
+import json from '../../server/checklistData.json'
 export default {
     name: 'procedures',
     data() {
         return {
+            myJson: json,
             notifications: false
-        }
-    },
-    methods: {
-        read: function() {
-            this.axios
-                .get("http://127.0.0.1:5000/get_patient_list")
-                .then((response) => {
-                    console.log(response.data)
-                })
+
         }
     }
 }

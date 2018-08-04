@@ -6,10 +6,7 @@ import router from './router'
 import Vuetify from 'vuetify'
 import 'vuetify/dist/vuetify.min.css'
 import VueCookies from 'vue-cookies'
-import axios from 'axios'
-import VueAxios from 'vue-axios'
 
-Vue.use(VueAxios, axios)
 Vue.use(VueCookies)
 
 Vue.use(Vuetify, { theme: {
@@ -19,8 +16,7 @@ Vue.use(Vuetify, { theme: {
   error: '#FF5252',
   info: '#2196F3',
   success: '#4CAF50',
-  warning: '#FFC107',
-  darkgray: '#A9A9A9'
+  warning: '#FFC107'
 }})
 
 Vue.config.productionTip = false

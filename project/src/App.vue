@@ -1,30 +1,27 @@
 <style scoped>
-
-
 #toolbar-style {
-    color: white
+	color: white
 }
 
 #login-view {
-    background: radial-gradient(#20287B, #141736);
-    width: 100%;
-    height: 100%;
+  background: radial-gradient(#20287B, #141736);
+  width: 100%;
+  height: 100%;
 }
 
 #login-card {
-    width: 30%;
-    height: 30%;
-    margin: 30%;
+  width: 30%;
+  height: 30%;
+  margin: 30%;
 }
 
 #login-box {
-    text-align: center;
-    color: white;
-    font-size: 30px;
+	text-align: center;
+	color: white;
+	font-size: 30px;
 }
 
-input[type=text],
-select {
+input[type=text], select {
     width: 400px;
     padding: 5px 10px;
     margin: 8px 0;
@@ -32,12 +29,11 @@ select {
     border: 1px solid #ccc;
     border-radius: 4px;
     box-sizing: border-box;
-    background-color: #f2f2f2;
-    color: black;
+		background-color: #f2f2f2;
+		color: black;
 }
 
-input[type=password],
-select {
+input[type=password], select {
     width: 400px;
     padding: 5px 10px;
     margin: 8px 0;
@@ -45,8 +41,8 @@ select {
     border: 1px solid #ccc;
     border-radius: 4px;
     box-sizing: border-box;
-    background-color: #f2f2f2;
-    color: black;
+		background-color: #f2f2f2;
+		color: black;
 }
 
 input[type=submit] {
@@ -71,95 +67,79 @@ input[type=submit]:hover {
     padding-right: 25%;
 }
 
-#placeholder-div {
-    margin-top: 70px;
-}
-
-#pwa-view {
-    height:100%;
-}
-
 </style>
 
 <template>
+  <v-app>
 
-<v-app>
-<div>
-    <div v-if="isLoggedIn" id="pwa-view">
-        <v-toolbar app:clipped-left="clipped" color="primary" id="toolbar-style" fixed>
-            <v-toolbar-title v-text="title"></v-toolbar-title>
-            <v-spacer></v-spacer>
-            <a href="/#">
-                <v-btn flat color="accent" v-on:click="logout">Log Out</v-btn>
-            </a>
-        </v-toolbar>
-        <div id="placeholder-div">
-        </div>
-        <v-content>
-            <router-view/>
-        </v-content>
-    </div>
+	<div v-if="isLoggedIn" id="pwa-view">
+		<v-toolbar app:clipped-left="clipped" color="primary" id="toolbar-style">
+		  <v-toolbar-title v-text="title"></v-toolbar-title>
+      <v-spacer></v-spacer>
+      <a href="/#"><v-btn flat color="accent" v-on:click="logout">Log Out</v-btn></a>
+		</v-toolbar>
+		<v-content>
+		  <router-view/>
+		</v-content>
+	</div>
 
-    <div v-else id="login-view">
-        <v-layout align-center justify-center row fill-height>
-            <div id="login-box">
-                <h1>Login</h1>
+	<div v-else id="login-view">
+      <v-layout align-center justify-center row fill-height>
+				<div id="login-box">
+					<h1>Login</h1>
 
-                <div id="inputs">
-                    <form>
-                        <input type="text" id="uname" name="username" placeholder="Username">
+					<div id="inputs">
+					  <form>
+					    <input type="text" id="uname" name="username" placeholder="Username">
 
-                        <input type="password" id="pword" name="password" placeholder="Password">
+					    <input type="password" id="pword" name="password" placeholder="Password">
 
-                        <input type="submit" value="Login" v-on:click="login">
-                    </form>
-                </div>
+					    <input type="submit" value="Login" v-on:click="login">
+					  </form>
+					</div>
 
-            </div>
-        </v-layout>
-    </div>
-</div>
-</v-app>
+				</div>
+			</v-layout>
+	</div>
 
+  </v-app>
 </template>
 
 <script>
-
 export default {
-    data() {
-            return {
-                clipped: false,
-                drawer: true,
-                fixed: false,
-                title: 'CheckWrist',
-                isLoggedIn: false,
-                userName: null,
-            }
-        },
+  data () {
+    return {
+      clipped: false,
+      drawer: true,
+      fixed: false,
+      title: 'CheckWrist',
+      isLoggedIn: false,
+      userName: null,
+    }
+  },
 
-        methods: {
-            login: function() {
-                this.userName = document.getElementById('uname').value;
-                this.$cookies.set('userName', this.userName);
-                this.isLoggedIn = true;
-            },
-            logout: function() {
-                this.$cookies.remove("userName");
-                this.isLoggedIn = false;
-            }
+  methods: {
+    login: function() {
+      this.userName = document.getElementById('uname').value;
+      this.$cookies.set('userName', this.userName);
+      this.isLoggedIn = true;
+    },
+    logout: function() {
+      this.$cookies.remove("userName");
+      this.isLoggedIn = false;
+    }
 
-        },
+  },
 
-        mounted: function() {
-            this.$nextTick(function() {
-                if (this.$cookies.isKey('userName')) {
-                    this.userName = this.$cookies.get('userName')
-                    this.isLoggedIn = true
-                }
-            })
-        },
+  mounted: function() {
+    this.$nextTick(function() {
+      if (this.$cookies.isKey('userName')) {
+        this.userName = this.$cookies.get('userName')
+        this.isLoggedIn = true
+      }
+    })
+  },
 
-        name: 'App'
+  name: 'App'
 }
-
 </script>
