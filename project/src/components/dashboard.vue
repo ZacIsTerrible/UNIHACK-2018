@@ -11,6 +11,6 @@
 
 <script>
 export default{
-  name: 'FirstView'
+  name: 'dashboard'
 }
 </script>
