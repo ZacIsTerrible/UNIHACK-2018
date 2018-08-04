@@ -27,6 +27,7 @@
                 </v-card>
             </v-flex>
         </v-layout>
+
     </v-app>
     <v-layout align-end justify-end row reverse fill-height/>
       <div>
