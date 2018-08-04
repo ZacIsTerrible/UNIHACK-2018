@@ -15,11 +15,23 @@ doctorsList = []
 def get_patient_list():
     return jsonify(patientList)
 
+@app.route('/get_patient', methods=['GET'])
+def get_patient():
+    patient_id = request.args.get('patient_id')
+    for patient in patientList:
+        if patient["patient_id"] == patient_id:
+            return jsonify(patient["patient_id"])
+    return jsonify({ "status" : "Failure" })
+
 @app.route('/add_condition', methods=['GET'])
 def add_condition():
 	patient_id = request.args.get('patient_id')
 	new_condition = request.args.get('condition')
+<<<<<<< Updated upstream
 	for patient in patientList:
+=======
+	for patient in patientList:        #changed paitentList to patientList
+>>>>>>> Stashed changes
 		if patient["patient_id"] == patient_id:
 			patient["conditions"].append(new_condition)
 			break
@@ -66,6 +78,7 @@ def add_patient():
 
 	# Return status. This is arbitary.
 	return jsonify({ "status" : "success" })
+<<<<<<< Updated upstream
 
 @app.route('/add_doctor', methods=['POST'])
 def add_doctor():
@@ -91,3 +104,5 @@ def add_doctor():
 
 
 
+=======
+>>>>>>> Stashed changes
