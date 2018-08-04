@@ -15,7 +15,7 @@
 }
 
 #grey {
-    background-color: #EEEEEE;
+    background-color: #F5F5F5;
 }
 
 </style>
@@ -37,8 +37,7 @@
                         </v-card-title>
                         <div id="grey">
                             <v-card-actions>
-                                <v-btn flat color="secondary">Share</v-btn>
-                                <v-btn flat color="secondary">Explore</v-btn>
+                                <v-btn flat color="secondary">Accept</v-btn>
                             </v-card-actions>
                         </div>
                     </v-card>
@@ -129,6 +128,10 @@ export default {
         return {
             dialog: false
         }
+    }
+
+    methods: {
+        
     }
 }
 
