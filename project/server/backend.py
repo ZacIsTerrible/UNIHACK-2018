@@ -138,7 +138,6 @@ def add_patient():
 	# Adding the patient to patient list.
     idToPatient[patient_id] = new_patient
     patientToProcedures[patient_id] = []
-    patientToProgress[patient_id] =
 
 	# Return status. This is arbitary.
     return jsonify({ "status" : "success" })
