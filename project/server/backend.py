@@ -7,7 +7,7 @@ CORS(app)
 
 # Data Stores
 patientList = []
-
+doctorsList = []
 
 
 # API
@@ -19,11 +19,11 @@ def get_patient_list():
 def add_condition():
 	patient_id = request.args.get('patient_id')
 	new_condition = request.args.get('condition')
-	for patient in paitentList:
+	for patient in patientList:
 		if patient["patient_id"] == patient_id:
 			patient["conditions"].append(new_condition)
 			break
-			
+
 	# Return status. This is arbitary.
 	return jsonify({ "status" : "success" })
 
@@ -66,5 +66,28 @@ def add_patient():
 
 	# Return status. This is arbitary.
 	return jsonify({ "status" : "success" })
+
+@app.route('/add_doctor', methods=['POST'])
+def add_doctor():
+
+	'doctor_id' = request.args.get('doctor_id')
+	'name' = request.args.get('name')
+	'age' = request.args.get('age')
+	'gender' = request.args.get('gender')
+	'specialisation' = request.args.get('specialisation')
+
+	new_doctor = {
+		'doctor_id' : doctor_id,
+		'name' : name,
+		'age' : age,
+		'gender' : gender,
+		'specialisation' : specialisation
+	}
+
+	doctorsList.append(new_doctor)
+
+	# Return status. This is arbitary.
+	return jsonify({ "status" : "success" })
+
 
 
