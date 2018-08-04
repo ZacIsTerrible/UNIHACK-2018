@@ -19,18 +19,21 @@ def get_patient_list():
 
 	patientQueue = specialisationToPatients[specialisation]
 	patientList = []
-
-	for patient in patientQueue:
-		patientList.append(patient['name']+":"+patient['patient_id']+":"+patient['priority'])
-		
-    return jsonify(patientList)
+    
+    counter = 1
+    while counter < 4:
+    	for patient in patientQueue:
+            if patient['priority'] == counter:
+                patientList.append(patient['name']+":"+patient['patient_id']+":"+patient['priority'])
+        counter = counter + 1
+	return jsonify(patientList)
 
 @app.route('/get_patient', methods=['GET'])
 def get_patient():
     patient_id = request.args.get('patient_id')
     return jsonify(idToPatient["patient_id"])
 
-@app.route('/add_condition', methods=['GET'])
+@app.route('/add_condition', methods=['POST'])
 def add_condition():
 	patient_id = request.args.get('patient_id')
 	new_condition = request.args.get('condition')
@@ -42,18 +45,29 @@ def add_condition():
 	# Return status. This is arbitary.
 	return jsonify({ "status" : "success" })
 
+@app.route('/assign_patient', methods=['POST'])
+def assign_patient():
+	patient_id = request.args.get('patient_id')
+	doctor_id = request.args.get('doctor_id')
+	specialty = idToDoctor[doctor_id][specialty]
+	idToPatient[patient_id][accepted] = True
+	heappq.heappush(specialisationToPatients[specialty], idToPatient[patient_id])
+
+	# Return status. This is arbitary.
+	return jsonify({ "status" : "success" })
+
 @app.route('/add_patient', methods=['POST'])
 def add_patient():
 
 	# Retrieve the new patient.
-	patient_id = request.args.get('patient_id')
+    patient_id = request.args.get('patient_id')
     name = request.args.get('name')
     age = request.args.get('age')
     gender = request.args.get('gender')
     height = request.args.get('height')
     weight = request.args.get('weight')
     emergency_contact = request.args.get('emergency_contact')
-	health_insurance = request.args.get('health_insurance')
+    health_insurance = request.args.get('health_insurance')
     conditions = request.args.get('conditions')
     accepted = request.args.get('accepted')
     address = request.address.get('address')
@@ -79,19 +93,19 @@ def add_patient():
 	}
 
 	# Adding the patient to patient list.
-	idToPatient[patient_id] = new_patient
+    idToPatient[patient_id] = new_patient
 
 	# Return status. This is arbitary.
-	return jsonify({ "status" : "success" })
+    return jsonify({ "status" : "success" })
 
 @app.route('/add_doctor', methods=['POST'])
 def add_doctor():
 
-	'doctor_id' = request.args.get('doctor_id')
-	'name' = request.args.get('name')
-	'age' = request.args.get('age')
-	'gender' = request.args.get('gender')
-	'specialisation' = request.args.get('specialisation')
+	doctor_id = request.args.get('doctor_id')
+	name = request.args.get('name')
+	age = request.args.get('age')
+	gender = request.args.get('gender')
+	specialisation = request.args.get('specialisation')
 
 	new_doctor = {
 		'doctor_id' : doctor_id,
