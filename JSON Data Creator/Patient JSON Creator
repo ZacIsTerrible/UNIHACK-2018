@@ -1,0 +1,22 @@
+[
+	'{{repeat(20, 10)}}',
+	{
+		patient_id: 'P*{{objectId()}}',
+		name: '{{firstName()}} {{surname()}}',
+		age: '{{integer(20, 40)}}',
+		gender: '{{gender()}}',
+		height: '{{integer(150, 190)}}',
+		weight: '{{integer(70, 110)}}',
+		emergency_contact: '{{phone()}}',
+		health_insurance: 'Bupa',
+		blood_type: 'xyz',
+		symptoms: 'xyz',
+		condition: 'xyz',
+		accepted: '{{bool()}}',
+		address: '{{integer(100, 999)}} {{street()}}, {{city()}}, {{state()}}, {{integer(100, 10000)}}',
+		medical_history: 'xyz',
+		dietary_requirements: 'xyz'
+	}
+]
+
+// https://www.json-generator.com/
