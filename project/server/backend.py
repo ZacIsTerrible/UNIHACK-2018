@@ -6,28 +6,36 @@ app = Flask(__name__)
 CORS(app)
 
 # Data Stores
-patientList = {}
-doctorsList = {}
-specialtyToPatients = {}
+idToPatient = {}
+idToDoctor = {}
+specialisationToPatients = {}
 
 
 # API
 @app.route('/get_patient_list', methods=['GET'])
 def get_patient_list():
 	doctor_id = request.args.get('doctor_id')
-	specialty = 
-    return jsonify(patientList)
+	specialisation = idToDoctor[doctor_id]['specialisation']
+
+	patientQueue = specialisationToPatients[specialisation]
+	patientList = []
+
+	for patient in patientQueue:
+
+
+
+    return jsonify(specialisationToPatients[specialisation])
 
 @app.route('/get_patient', methods=['GET'])
 def get_patient():
     patient_id = request.args.get('patient_id')
-    return jsonify(patientList["patient_id"])
+    return jsonify(idToPatient["patient_id"])
 
 @app.route('/add_condition', methods=['GET'])
 def add_condition():
 	patient_id = request.args.get('patient_id')
 	new_condition = request.args.get('condition')
-	for patient in patientList:        
+	for patient in idToPatient:        
 		if patient["patient_id"] == patient_id:
 			patient["conditions"].append(new_condition)
 			break
@@ -70,7 +78,7 @@ def add_patient():
 	}
 
 	# Adding the patient to patient list.
-	patientList[patient_id] = new_patient
+	idToPatient[patient_id] = new_patient
 
 	# Return status. This is arbitary.
 	return jsonify({ "status" : "success" })
@@ -92,7 +100,11 @@ def add_doctor():
 		'specialisation' : specialisation
 	}
 
-	doctorsList[doctor_id] = new_doctor
+	idToDoctor[doctor_id] = new_doctor
+
+	#if we haven't seen the specialisation before create a new PQ of patients
+	if specialisation not in specialisationToPatients.keys():
+		specialisationToPatients[specialisation] = []
 
 	# Return status. This is arbitary.
 	return jsonify({ "status" : "success" })
