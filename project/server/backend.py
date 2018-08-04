@@ -12,7 +12,6 @@ idToPatient = {}
 idToDoctor = {}
 doctorToPatient = {}
 specialisationToPatients = {}
-patientToSessions = {}
 
 # API
 @app.route('/get_patient_list', methods=['GET'])
@@ -141,4 +140,3 @@ def add_doctor():
 	# Return status. This is arbitary.
     return jsonify({ "status" : "success" })
 
-app.run()
