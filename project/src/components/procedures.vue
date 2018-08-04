@@ -32,8 +32,8 @@
 
             </v-flex>
             <div>
-                <v-btn color="orange darken-2" dark>
-                    <v-icon dark left>arrow_back</v-icon>Back
+                <v-btn color="orange darken-2" dark v-on:click="back">
+                    <v-icon  dark left>arrow_back</v-icon>Back
                 </v-btn>
             </div>
         </v-layout>
@@ -53,6 +53,13 @@ export default {
         return {
             myJson: json,
             check: false
+        }
+    },
+
+    methods: {
+        back: function() {
+            console.log("back")
+            this.$router.push('/patient/' + this.$route.params.id)
         }
     },
 

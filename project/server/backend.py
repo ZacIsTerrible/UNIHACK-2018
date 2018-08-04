@@ -12,7 +12,6 @@ CORS(app)
 # Data Stores
 idToPatient = {}
 idToDoctor = {}
-doctorToPatient = {}
 specialisationToPatients = {}
 patientToProcedures = {}
 patientToProgress = {}
@@ -75,7 +74,6 @@ def get_patient():
 def accept_patient():
     patient_id = request.args.get('patient_id')
     doctor_id = request.args.get('doctor_id')
-    doctorToPatient[doctor_id] = patient_id
     idToPatient[patient_id][accepted] = True
     patientToProcedures[patient_id] = []
 
@@ -105,11 +103,9 @@ def add_procedure():
 @app.route('/pass_on', methods=['POST'])
 def pass_on():
     patient_id = request.args.get('patient_id')
-    old_doctor_id = request.args.get('old_doctor_id')
     specialty = request.args.get('specialty')
-    idToPatient[patient_id][accepted] = False
-    specialisationToPatients[specialty] = idToPatient[patient_id]
-    del doctorToPatient[old_doctor_id]
+    idToPatient[patient_id]['accepted'] = False
+    specialisationToPatients[specialty].append(idToPatient[patient_id])
 
     # Return status. This is arbitary.
     return jsonify({ "status" : "success" })

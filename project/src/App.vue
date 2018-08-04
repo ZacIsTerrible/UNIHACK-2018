@@ -71,7 +71,7 @@ input[type=submit]:hover {
 }
 
 #spacing {
-    margin: 60px;
+    margin: 70px;
 }
 
 </style>
