@@ -1,3 +1,5 @@
+import time
+
 from flask import Flask, jsonify, request
 from flask_cors import CORS, cross_origin
 
@@ -8,10 +10,19 @@ CORS(app)
 # Data Stores
 idToPatient = {}
 idToDoctor = {}
+doctorToPatient = {}
 specialisationToPatients = {}
-
+patientToProcedures = {}
 
 # API
+@app.route('/view_procedures', methods=['GET'])
+def view_procedures():
+    patient_id = request.args.get('patient_id')
+    procedureList = []
+    for procedure in patientToProcedures[patient_id]:
+        procedureList.append(procedure[0]+":"+procedure[1]+":"+procedure[2]+":"+procedure[3])
+    return jsonify(procedureList)
+
 @app.route('/get_patient_list', methods=['GET'])
 def get_patient_list():
     doctor_id = request.args.get('doctor_id')
@@ -22,8 +33,8 @@ def get_patient_list():
     counter = 1
     while counter < 4:
         for patient in patientQueue:
-            if patient['priority'] == counter and patient['accepted'] == False:
-                patientList.append(patient['name']+":"+patient['patient_id']+":"+patient['priority'])
+            if patient['priority'] == counter:
+                patientList.append(patient['name']+":"+patient['patient_id']+":"+patient['priority']+":"+patient['accepted'])
         counter = counter + 1
     return jsonify(patientList)
 
@@ -44,16 +55,44 @@ def add_condition():
 	# Return status. This is arbitary.
 	return jsonify({ "status" : "success" })
 
-@app.route('/assign_patient', methods=['POST'])
-def assign_patient():
-	patient_id = request.args.get('patient_id')
-	doctor_id = request.args.get('doctor_id')
-	specialty = idToDoctor[doctor_id][specialty]
-	idToPatient[patient_id][accepted] = True
-	heappq.heappush(specialisationToPatients[specialty], idToPatient[patient_id])
+@app.route('/accept_patient', methods=['POST'])
+def accept_patient():
+    patient_id = request.args.get('patient_id')
+    doctor_id = request.args.get('doctor_id')
+    doctorToPatient[doctor_id] = patient_id
+    idToPatient[patient_id][accepted] = True
+    patientToProcedures[patient_id] = []
+
 
 	# Return status. This is arbitary.
-	return jsonify({ "status" : "success" })
+    return jsonify({ "status" : "success" })
+
+app.route('/add_procedure', methods=['POST'])
+def add_procedure():
+    doctor_id = request.args.get('doctor_id')
+    procedure_name = request.args.get('procedure_name')
+    comments = request.args.get('comments')
+    timestamp = time.asctime( time.localtime(time.time()) )
+    #get the list of sessions for this patient
+    #get the most recent session
+    #add to it to given procedure
+    patientToProcedures[patient_id].append(doctor_id, timestamp, procedure_name, comments)
+
+    # Return status. This is arbitary.
+    return jsonify({ "status" : "success" })
+
+@app.route('/pass_on', methods=['POST'])
+def pass_on():
+    patient_id = request.args.get('patient_id')
+    old_doctor_id = request.args.get('old_doctor_id')
+    new_doctor_id = request.args.get('new_doctor_id')
+    specialty = idToDoctor[new_doctor_id][specialty]
+    idToPatient[patient_id][accepted] = False
+    specialisationToPatients[specialty] = idToPatient[patient_id]
+    del doctorToPatient[old_doctor_id]
+
+    # Return status. This is arbitary.
+    return jsonify({ "status" : "success" })
 
 @app.route('/add_patient', methods=['POST'])
 def add_patient():
@@ -93,6 +132,7 @@ def add_patient():
 
 	# Adding the patient to patient list.
     idToPatient[patient_id] = new_patient
+    patientToProcedures[patient_id] = []
 
 	# Return status. This is arbitary.
     return jsonify({ "status" : "success" })
@@ -121,4 +161,8 @@ def add_doctor():
 
 	# Return status. This is arbitary.
     return jsonify({ "status" : "success" })
-app.run()
+
+@app.route('/dummy')
+def dummy():
+    return jsonify({ "status" : "success" })
+
