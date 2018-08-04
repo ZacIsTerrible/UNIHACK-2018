@@ -1,7 +1,9 @@
 <template>
 <div id="summary">
-  <h1>{{patient_name}}</h1>
-  <p>{{patient_summary}}</p>
+    <v-container grid-list-md>
+        <h1 class="display-2 font-weight-medium">{{patient_name}}'s Medical Information</h1>
+    </v-container>
+
 </div>
 
 </template>

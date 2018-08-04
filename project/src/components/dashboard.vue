@@ -1,9 +1,8 @@
 <style scoped>
 
 #text-color {
-    color:black;
+    color: black;
 }
-
 
 </style>
 
@@ -48,9 +47,37 @@
             <h2>Actions</h2>
             <v-layout row wrap>
                 <v-btn v-on:click="summary" color="secondary" flat>Summary</v-btn>
-                <v-btn v-on:click="doctor_log" color="secondary" flat>Doctor Log</v-btn>
+                <v-btn v-on:click="doctor_log" color="secondary" flat>Log Session</v-btn>
                 <v-btn v-on:click="view_procedures" color="secondary" flat>View Procedures</v-btn>
-                <v-btn color="secondary" v-on:click="pass_on" flat>Pass On</v-btn>
+
+                <v-layout row>
+                    <v-dialog v-model="dialog" persistent max-width="500px">
+                        <v-btn slot="activator" color="secondary" v-on:click="pass_on" flat>Pass On</v-btn>
+                        <v-card>
+                            <v-card-title>
+                                <span class="headline">User Profile</span>
+                            </v-card-title>
+                            <v-card-text>
+                                <v-container grid-list-md>
+                                    <v-layout wrap>
+                                        <v-flex xs12 sm6>
+                                            <v-autocomplete :items="specialists" v-model="selectedSpecialist" label="Specialists" required></v-autocomplete>
+                                        </v-flex>
+                                    </v-layout>
+                                </v-container>
+                                <small>*indicates required field</small>
+                            </v-card-text>
+                            <v-card-actions>
+                                <v-spacer></v-spacer>
+                                <v-btn color="blue darken-1" flat @click.native="dialog = false">Close</v-btn>
+                                <v-btn color="blue darken-1" flat @click.native="passOn">Save</v-btn>
+                            </v-card-actions>
+                        </v-card>
+                    </v-dialog>
+                </v-layout>
+
+
+
                 <v-btn color="success" v-on:click="complete" flat>Complete</v-btn>
             </v-layout>
         </v-container>
@@ -79,12 +106,30 @@ export default {
             patient_health_insurance: null,
             patient_blood_type: null,
             patient_current_condition: null,
+            specialists: [],
+            selectedSpecialist: null,
+            dialog: false,
         }
     },
 
     methods: {
         view_procedures: function() {
-            this.$router.push('/patient/'+ this.patient.patient_id + '/procedure')
+            this.$router.push('/patient/' + this.patient.patient_id + '/procedure')
+        },
+
+        passOn: function() {
+            var ajax_request = "http://localhost:5000/pass_on?patient_id=" + this.patient.patient_id + "&specialty=" + this.selectedSpecialist
+
+            this.axios.post(ajax_request)
+                .then(function(response) {
+                    console.log(response);
+                }).catch(error => {
+                    console.log(error.response)
+                });
+        },
+
+        summary: function() {
+            this.$router.push('/patient/' + this.patient.patient_id + '/summary')
         }
     },
 
@@ -95,19 +140,25 @@ export default {
                 .get("http://localhost:5000/get_patient?patient_id=" + this.$route.params.id)
                 .then((response) => {
                     this.patient = response.data
-                    this.patient_name= this.patient.name,
-                    this.patient_age= this.patient.age,
-                    this.patient_gender= this.patient.gender,
-                    this.patient_height= this.patient.height,
-                    this.patient_weight= this.patient.age,
-                    this.patient_address= this.patient.address,
-                    this.patient_emergency_contact= this.patient.emergency_contact,
-                    this.patient_health_insurance= this.patient.health_insurance,
-                    this.patient_blood_type= this.patient.bloodType,
-                    this.patient_current_condition= this.patient.condition,
+                    this.patient_name = this.patient.name,
+                        this.patient_age = this.patient.age,
+                        this.patient_gender = this.patient.gender,
+                        this.patient_height = this.patient.height,
+                        this.patient_weight = this.patient.age,
+                        this.patient_address = this.patient.address,
+                        this.patient_emergency_contact = this.patient.emergency_contact,
+                        this.patient_health_insurance = this.patient.health_insurance,
+                        this.patient_blood_type = this.patient.bloodType,
+                        this.patient_current_condition = this.patient.condition,
 
-                    console.log(this.patient)
+                        console.log(this.patient)
                 })
+
+                this.axios
+                    .get("http://localhost:5000/get_specialisations")
+                    .then((response) => {
+                        this.specialists = response.data
+                    })
 
         })
     }
