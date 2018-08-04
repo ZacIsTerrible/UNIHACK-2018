@@ -54,7 +54,7 @@ export default {
     methods: {
         read: function() {
             this.axios
-                .get("http://127.0.0.1:5000/dummy")
+                .get("http://127.0.0.1:5000/get_patient_list")
                 .then((response) => {
                     console.log(response.data)
                 })
