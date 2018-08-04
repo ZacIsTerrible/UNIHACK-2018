@@ -20,7 +20,7 @@
                     <h2>Profile</h2>
                     <v-card dark color="primary">
                         <v-card-text>Age: {{patient_age}}</v-card-text>
-                        <v-card-text>Gender: {{patient_gender}}</v-card-text>
+                        <v-card-text>Sex: {{patient_gender}}</v-card-text>
                         <v-card-text>Height: {{patient_height}}</v-card-text>
                         <v-card-text>Weight: {{patient_weight}}</v-card-text>
                         <v-card-text>Blood Type: {{patient_blood_type}}</v-card-text>

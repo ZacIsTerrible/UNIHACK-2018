@@ -34,11 +34,9 @@ def get_specialisations():
 
 @app.route('/view_procedures', methods=['GET'])
 def view_procedures():
+    #may need to reverse order???
     patient_id = request.args.get('patient_id')
-    procedureList = []
-    for procedure in patientToProcedures[patient_id]:
-        procedureList.append(procedure[0]+":"+procedure[1]+":"+procedure[2]+":"+procedure[3])
-    return jsonify(procedureList)
+    return jsonify(patientToProcedures[patient_id])
 
 @app.route('/get_patient_list', methods=['GET'])
 def get_patient_list():
@@ -46,12 +44,16 @@ def get_patient_list():
     specialisation = idToDoctor[doctor_id]['specialisation']
     patientQueue = specialisationToPatients[specialisation]
     patientList = []
+    print("HERE")
+    print(patientQueue)
 
     counter = 1
     while counter < 4:
         for patient in patientQueue:
+            print("in for loop")
+            print(patient)
             if patient['priority'] == counter:
-                patientList.append(patient['name']+":"+patient['patient_id']+":"+patient['priority']+":"+patient['accepted'])
+                patientList.append(patient)
         counter = counter + 1
     return jsonify(patientList)
 
@@ -88,7 +90,12 @@ def add_procedure():
     #get the list of sessions for this patient
     #get the most recent session
     #add to it to given procedure
-    patientToProcedures[patient_id].append(doctor_id, timestamp, procedure_name, comments)
+    patientToProcedures[patient_id].append({
+        'doctor_id':doctor_id,
+        'timetstamp':timestamp,
+        'procedure_name':procedure_name,
+        'comments': comments
+    })
 
     # Return status. This is arbitary.
     return jsonify({ "status" : "success" })
@@ -110,7 +117,7 @@ def assign():
     patient_id = request.args.get('patient_id')
     specialty = request.args.get('specialty')
     idToPatient[patient_id]['accepted'] = False
-    specialisationToPatients[specialty] = idToPatient[patient_id]
+    specialisationToPatients[specialty].append(idToPatient[patient_id])
     # Return status. This is arbitary.
     return jsonify({ "status" : "success" })
 
@@ -140,7 +147,6 @@ def add_patient():
     elif priority == "High":
         priority = 1
 
-
     name = firstName + " " +lastName
 
     new_patient = {
@@ -159,7 +165,6 @@ def add_patient():
         'bloodType' : bloodType
 	}
 
-    print(new_patient)
 
 	# Adding the patient to patient list.
     idToPatient[patient_id] = new_patient
@@ -182,11 +187,7 @@ def add_doctor(doctor_id, name, age, gender, specialisation):
 
 	#if we haven't seen the specialisation before create a new PQ of patients
     if specialisation not in specialisationToPatients.keys():
-        specialisationToPatients[specialisation] = {
-            "step_number": "1",
-            "task_decription": "",
-            "timer": ""
-        }
+        specialisationToPatients[specialisation] = []
 
 @app.route('/save_progress', methods=['POST'])
 def save_progress():
