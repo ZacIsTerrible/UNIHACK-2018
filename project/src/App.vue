@@ -22,8 +22,8 @@
 }
 
 input[type=text], select {
-    width: 100%;
-    padding: 12px 20px;
+    width: 400px;
+    padding: 5px 10px;
     margin: 8px 0;
     display: inline-block;
     border: 1px solid #ccc;
@@ -34,8 +34,8 @@ input[type=text], select {
 }
 
 input[type=password], select {
-    width: 100%;
-    padding: 12px 20px;
+    width: 400px;
+    padding: 5px 10px;
     margin: 8px 0;
     display: inline-block;
     border: 1px solid #ccc;
@@ -46,10 +46,10 @@ input[type=password], select {
 }
 
 input[type=submit] {
-    width: 100%;
-    background-color: #4CAF50;
+    width: 400px;
+    background-color: #2168BC;
     color: white;
-    padding: 14px 20px;
+    padding: 5px 10px;
     margin: 8px 0;
     border: none;
     border-radius: 4px;
@@ -57,13 +57,14 @@ input[type=submit] {
 }
 
 input[type=submit]:hover {
-    background-color: #45a049;
+    background-color: #236EC7;
 }
 
 #inputs {
     /* border-radius: 5px;
     background-color: #f2f2f2; */
-    padding: 20px;
+    padding-left: 25%;
+    padding-right: 25%;
 }
 
 </style>
@@ -74,6 +75,7 @@ input[type=submit]:hover {
 	<div v-if="isLoggedIn" id="pwa-view">
 		<v-toolbar app:clipped-left="clipped" color="primary" id="toolbar-style">
 		  <v-toolbar-title v-text="title"></v-toolbar-title>
+      <a href="/#"><v-btn flat color="accent" v-on:click="logout">Log Out</v-btn></a>
 		</v-toolbar>
 		<v-content>
 		  <router-view/>
@@ -86,12 +88,12 @@ input[type=submit]:hover {
 					<h1>Login</h1>
 
 					<div id="inputs">
-					  <form action="xyz">
+					  <form>
 					    <input type="text" id="uname" name="username" placeholder="Username">
 
 					    <input type="password" id="pword" name="password" placeholder="Password">
 
-					    <input type="submit" value="Submit">
+					    <input type="submit" value="Login" v-on:click="login">
 					  </form>
 					</div>
 
@@ -110,9 +112,33 @@ export default {
       drawer: true,
       fixed: false,
       title: 'CheckWrist',
-      isLoggedIn: true
+      isLoggedIn: false,
+      userName: null,
     }
   },
+
+  methods: {
+    login: function() {
+      this.userName = document.getElementById('uname').value;
+      this.$cookies.set('userName', this.userName);
+      this.isLoggedIn = true;
+    },
+    logout: function() {
+      this.$cookies.remove("userName");
+      this.isLoggedIn = false;
+    }
+
+  },
+
+  mounted: function() {
+    this.$nextTick(function() {
+      if (this.$cookies.isKey('userName')) {
+        this.userName = this.$cookies.get('userName')
+        this.isLoggedIn = true
+      }
+    })
+  },
+
   name: 'App'
 }
 </script>

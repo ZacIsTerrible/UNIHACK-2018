@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import login from '@/components/login'
 import patientsList from '@/components/patientsList'
 import dashboard from '@/components/dashboard'
 import procedures from '@/components/procedures'
@@ -14,11 +13,6 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'login',
-      component: login
-    },
-    {
-      path: '/patients',
       name: 'patient',
       component: patientsList
     },
