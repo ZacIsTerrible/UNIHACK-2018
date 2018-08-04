@@ -49,15 +49,15 @@
                                             <v-container grid-list-md>
                                                 <v-layout wrap>
                                                     <v-flex xs12 sm6>
-                                                        <v-autocomplete :items="[]" label="Interests" multiple chips></v-autocomplete>
+                                                        <v-autocomplete :items="specialists" v-model="selectedSpecialist" label="Specialists" required></v-autocomplete>
                                                     </v-flex>
                                                 </v-layout>
                                             </v-container>
                                         </v-card-text>
                                         <v-card-actions>
                                             <v-spacer></v-spacer>
-                                            <v-btn color="blue darken-1" flat @click.native="assignDialog = false">Close</v-btn>
-                                            <v-btn color="blue darken-1" flat @click.native="assignDialog = false">Save</v-btn>
+                                            <v-btn color="blue darken-1" flat @click.native="assignDialog = false" id="close1">Close</v-btn>
+                                            <v-btn color="blue darken-1" flat @click.native="assignDoctor(patient)">Save</v-btn>
                                         </v-card-actions>
                                     </v-card>
                                 </v-dialog>
@@ -142,17 +142,26 @@
                         </v-card-title>
                         <v-card-actions>
                             <v-spacer></v-spacer>
-                            <v-btn color="blue darken-1" flat @click.native="dialog = false">Close</v-btn>
+                            <v-btn color="blue darken-1" flat @click.native="dialog = false" id="close2">Close</v-btn>
                             <v-btn color="blue darken-1" flat @click.native="addPatient">Save</v-btn>
                         </v-card-actions>
                     </v-card>
                 </v-dialog>
             </v-layout>
         </v-container>
+        <v-snackbar v-model="snackbar" color="success" multi-line="multi-line" timeout="4000">
+            Successully {{ text }}!
+            <v-btn dark flat @click="snackbar = false">
+                Close
+            </v-btn>
+        </v-snackbar>
     </div>
 </div>
 
 </template>
+
+<style scoped>
+</style>
 
 <script>
 
@@ -161,7 +170,8 @@ export default {
     data() {
         return {
             dialog: false,
-            assignDialog:false,
+            assignDialog: false,
+            snackbar: false,
             firstName: null,
             condition: null,
             lastName: null,
@@ -176,6 +186,8 @@ export default {
             bloodType: null,
             patients: [],
             specialists: [],
+            selectedSpecialist: null,
+            text: null,
         }
     },
 
@@ -185,7 +197,6 @@ export default {
             var ajax_request = ajax_request_first_half + "&address=" + this.address + "&health_insurance=" + this.insurance + "&priority=" + this.priority + "&bloodType=" + this.bloodType + "&condition=" + this.condition;
 
             console.log(ajax_request)
-            console.log("what")
 
             this.axios.post(ajax_request)
                 .then(function(response) {
@@ -193,8 +204,25 @@ export default {
                 }).catch(error => {
                     console.log(error.response)
                 });
-            this.$router.push('/')
-        }
+            this.text = "Added New Patient"
+            this.snackbar = true
+            document.getElementById("close2").click()
+        },
+        assignDoctor: function(patient) {
+            var ajax_request = "http://localhost:5000/assign?patient_id=" + patient.patient_id + "&specialty=" + this.selectedSpecialist
+
+            this.axios.post(ajax_request)
+                .then(function(response) {
+                    console.log(response);
+                }).catch(error => {
+                    console.log(error.response)
+                });
+
+            this.text = "Assigned Patient to Specialist"
+            this.snackbar = true
+            document.getElementById("close1").click()
+
+        },
     },
 
     mounted: function() {
@@ -204,6 +232,11 @@ export default {
                 .get("http://localhost:5000/get_all_patients")
                 .then((response) => {
                     this.patients = response.data
+                })
+            this.axios
+                .get("http://localhost:5000/get_specialisations")
+                .then((response) => {
+                    this.specialists = response.data
                 })
         })
     }

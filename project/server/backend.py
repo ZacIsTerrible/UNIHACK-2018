@@ -1,4 +1,6 @@
 import time
+import json
+from pprint import pprint
 
 from flask import Flask, jsonify, request
 from flask_cors import CORS, cross_origin
@@ -15,13 +17,8 @@ specialisationToPatients = {}
 patientToProcedures = {}
 patientToProgress = {}
 
-idToDoctor["D*5b652d0f0af548bd5ec0dfbc"] = {
-    "doctor_id": "D*5b652d0f0af548bd5ec0dfbc",
-    "name": "Page Gamble",
-    "age": 30,
-    "gender": "male",
-    "specialisation": "Cardiologist"
-}
+
+
 
 # API
 @app.route('/get_progress', methods=['GET'])
@@ -30,7 +27,10 @@ def get_progress():
 
 @app.route('/get_specialisations', methods=['GET'])
 def get_specialisations():
-    return jsonify(specialisationToPatients.keys())
+    specialisations = []
+    for specialisation in specialisationToPatients.keys():
+        specialisations.append(specialisation)
+    return jsonify(specialisations)
 
 @app.route('/view_procedures', methods=['GET'])
 def view_procedures():
@@ -97,8 +97,7 @@ def add_procedure():
 def pass_on():
     patient_id = request.args.get('patient_id')
     old_doctor_id = request.args.get('old_doctor_id')
-    new_doctor_id = request.args.get('new_doctor_id')
-    specialty = idToDoctor[new_doctor_id][specialty]
+    specialty = request.args.get('specialty')
     idToPatient[patient_id][accepted] = False
     specialisationToPatients[specialty] = idToPatient[patient_id]
     del doctorToPatient[old_doctor_id]
@@ -107,15 +106,11 @@ def pass_on():
     return jsonify({ "status" : "success" })
 
 @app.route('/assign', methods=['POST'])
-def pass_on():
+def assign():
     patient_id = request.args.get('patient_id')
-    old_doctor_id = request.args.get('old_doctor_id')
-    new_doctor_id = request.args.get('new_doctor_id')
-    specialty = idToDoctor[new_doctor_id][specialty]
-    idToPatient[patient_id][accepted] = False
+    specialty = request.args.get('specialty')
+    idToPatient[patient_id]['accepted'] = False
     specialisationToPatients[specialty] = idToPatient[patient_id]
-    del doctorToPatient[old_doctor_id]
-
     # Return status. This is arbitary.
     return jsonify({ "status" : "success" })
 
@@ -173,13 +168,7 @@ def add_patient():
 	# Return status. This is arbitary.
     return jsonify({ "status" : "success" })
 
-@app.route('/add_doctor', methods=['POST'])
-def add_doctor():
-    doctor_id = request.args.get('doctor_id')
-    name = request.args.get('name')
-    age = request.args.get('age')
-    gender = request.args.get('gender')
-    specialisation = request.args.get('specialisation')
+def add_doctor(doctor_id, name, age, gender, specialisation):
 
     print(doctor_id + " " + name + " " + age + " " + gender + " " + specialisation)
     new_doctor = {
@@ -198,8 +187,6 @@ def add_doctor():
             "task_decription": "",
             "timer": ""
         }
-	# Return status. This is arbitary.
-    return jsonify({ "status" : "success" })
 
 @app.route('/save_progress', methods=['POST'])
 def save_progress():
@@ -215,4 +202,11 @@ def save_progress():
 @app.route('/dummy')
 def dummy():
     return jsonify({ "status" : "success" })
+
+with open('doctors.json') as f:
+    data = json.load(f)
+
+for doctor in data:
+    add_doctor(doctor["doctor_id"], doctor["name"], str(doctor["age"]), doctor["gender"], doctor["specialisation"])
+
 app.run()
