@@ -33,7 +33,7 @@
                         <v-card-title>
 
                             <div v-if="patient.priority == '3'" id="chat-container">
-                                <span class="title">{{patient.name}}   </span><span style="color: red;" class="headline">●</span>
+                                <span class="title">{{patient.name}}   </span><span style="color: mediumseagreen;" class="headline">●</span>
                                 <br>
                                 <span class="subtitle">{{patient.condition}}</span>
                             </div>
@@ -45,7 +45,7 @@
                             </div>
 
                             <div v-else-if="patient.priority == '1'" id="chat-container">
-                                <span class="title">{{patient.name}}   </span><span style="color: mediumseagreen;" class="headline">●</span>
+                                <span class="title">{{patient.name}}   </span><span style="color: red;" class="headline">●</span>
                                 <br>
                                 <span class="subtitle">{{patient.condition}}</span>
                             </div>
@@ -58,8 +58,8 @@
                             <v-card-actions v-if="userType === 'Nurse'">
 
                                 <v-dialog v-model="assignDialog" persistent max-width="500px">
-
                                     <v-btn slot="activator" flat color="secondary">Assign Specialist</v-btn>
+
                                     <v-card>
                                         <v-card-title>
                                             <span class="headline">Select Specialist</span>
@@ -113,17 +113,17 @@
                             <span class="headline">Patient Profile</span>
                             <v-container grid-list-xl>
                                 <v-layout wrap>
-                                    <v-flex xs12 sm6 md4>
-                                        <v-text-field label="Legal first name" v-model="firstName" required></v-text-field>
+                                    <v-flex xs6>
+                                        <v-text-field label="Legal First Name" v-model="firstName" required></v-text-field>
                                     </v-flex>
-                                    <v-flex xs12 sm6 md4>
-                                        <v-text-field label="Legal last name" v-model="lastName" persistent-hint required></v-text-field>
+                                    <v-flex xs6>
+                                        <v-text-field label="Legal Last Name" v-model="lastName" persistent-hint required></v-text-field>
                                     </v-flex>
                                     <v-flex xs12>
                                         <v-text-field label="Emergency Contact" v-model="emergencyContact" required></v-text-field>
                                     </v-flex>
                                     <v-flex xs12 sm6 md4>
-                                        <v-text-field label="Condition" v-model="condition"></v-text-field>
+                                        <v-text-field label="Condition" v-model="condition" required></v-text-field>
                                     </v-flex>
                                     <v-flex xs12 sm6>
                                         <v-text-field label="Age" v-model="age" required></v-text-field>
@@ -134,11 +134,11 @@
                                     </v-flex>
 
                                     <v-flex xs12 sm6>
-                                        <v-text-field label="Height" required v-model="height"></v-text-field>
+                                        <v-text-field label="Height (cm)" required v-model="height"></v-text-field>
                                     </v-flex>
 
                                     <v-flex xs12 sm6>
-                                        <v-text-field label="Weight" required v-model="weight"></v-text-field>
+                                        <v-text-field label="Weight (kg)" required v-model="weight"></v-text-field>
                                     </v-flex>
                                     <v-flex xs12>
                                         <v-select :items="['Low', 'Mid', 'High']" label="Priority" required v-model="priority"></v-select>
@@ -207,6 +207,10 @@ export default {
             selectedSpecialist: null,
             text: null,
             userType: null,
+            disable1: false,
+            disable2: false,
+            disable3: false,
+            disable4: false,
         }
     },
 
@@ -226,6 +230,7 @@ export default {
             this.text = "Added New Patient"
             this.snackbar = true
             document.getElementById("close2").click()
+            location.reload();
         },
         assignDoctor: function(patient) {
             var ajax_request = "http://localhost:5000/assign?patient_id=" + patient.patient_id + "&specialty=" + this.selectedSpecialist
@@ -248,7 +253,7 @@ export default {
         },
         scan: function(){
           this.$router.push('/qr')
-        }
+        },
     },
 
     mounted: function() {

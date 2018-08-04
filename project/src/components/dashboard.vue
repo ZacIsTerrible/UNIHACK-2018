@@ -31,7 +31,7 @@
                     <h2>Administrative Information</h2>
                     <v-card dark color="white" id="text-color">
                         <v-card-text>Address: {{patient_address}}</v-card-text>
-                        <v-card-text>Emergency Contact: {{patient_emergency_contact}}></v-card-text>
+                        <v-card-text>Emergency Contact: {{patient_emergency_contact}}</v-card-text>
                         <v-card-text>Health Insurance: {{patient_health_insurance}}</v-card-text>
                     </v-card>
                 </v-flex>
@@ -130,6 +130,18 @@ export default {
 
         summary: function() {
             this.$router.push('/patient/' + this.patient.patient_id + '/summary')
+        },
+
+        complete: function() {
+            var ajax_request = "http://localhost:5000/remove_patient?doctor_id=" + this.$cookies.get("userName")+ "&patient_id=" + this.patient.patient_id
+
+            this.axios.post(ajax_request)
+                .then(function(response) {
+                    console.log(response);
+                }).catch(error => {
+                    console.log(error.response)
+                });
+            this.$router.push('/')
         }
     },
 

@@ -102,8 +102,11 @@ def add_procedure():
 
 @app.route('/pass_on', methods=['POST'])
 def pass_on():
+    old_doctor_id = request.args.get('doctor_id')
     patient_id = request.args.get('patient_id')
     specialty = request.args.get('specialty')
+    old_specialty = idToDoctor[old_doctor_id]['specialty']
+    specialisationToPatients[old_specialty].remove(idToPatient[patient_id])
     idToPatient[patient_id]['accepted'] = False
     specialisationToPatients[specialty].append(idToPatient[patient_id])
 
@@ -197,6 +200,13 @@ def save_progress():
         "task_decription": task_decription,
         "timer": timer
     }
+
+@app.route('/remove_patient', methods=['POST'])
+def remove_patient():
+    doctor_id = request.args.get('doctor_id')
+    patient_id = request.args.get('patient_id')
+    specialisation = idToDoctor[doctor_id]['specialisation']
+    specialisationToPatients[specialisation].remove(idToPatient[patient_id])
 
 @app.route('/dummy')
 def dummy():
