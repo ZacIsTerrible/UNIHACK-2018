@@ -110,7 +110,7 @@ export default {
       drawer: true,
       fixed: false,
       title: 'CheckWrist',
-      isLoggedIn: false
+      isLoggedIn: true
     }
   },
   name: 'App'

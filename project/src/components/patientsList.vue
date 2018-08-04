@@ -79,6 +79,12 @@
           <v-icon dark>add</v-icon>
       </v-btn>
     </v-layout>
+    <v-layout align-end justify-end row reverse fill-height/>
+      <div>
+        <v-btn color="orange darken-2" dark>
+            <v-icon dark left>arrow_back</v-icon>Back
+          </v-btn>
+      </div>
   </div>
 
 </template>

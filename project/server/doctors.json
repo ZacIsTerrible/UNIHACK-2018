@@ -1,0 +1,37 @@
+[
+  {
+    "doctor_id": "D*5b652d0f6bd7bbf0c61466cc",
+    "name": "Tia Snider",
+    "age": 37,
+    "gender": "female",
+    "specialisation": "Maternity"
+  },
+  {
+    "doctor_id": "D*5b652d0f0af548bd5ec0dfbc",
+    "name": "Page Gamble",
+    "age": 30,
+    "gender": "male",
+    "specialisation": "Cardiologist"
+  },
+  {
+    "doctor_id": "D*5b652d0f6699553ae65f24ec",
+    "name": "Alexis Garza",
+    "age": 52,
+    "gender": "female",
+    "specialisation": "Cardiovascular surgeon"
+  },
+  {
+    "doctor_id": "D*5b652d0fea8e13b2633d6b38",
+    "name": "Margie Levy",
+    "age": 51,
+    "gender": "female",
+    "specialisation": "Psychiatrist"
+  },
+  {
+    "doctor_id": "D*5b652d0f8f59268d13313120",
+    "name": "Norma Sparks",
+    "age": 54,
+    "gender": "female",
+    "specialisation": "Pediatrician"
+  }
+]
