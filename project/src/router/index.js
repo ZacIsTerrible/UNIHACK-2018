@@ -6,6 +6,7 @@ import procedures from '@/components/procedures'
 import conditions from '@/components/conditions'
 import log from '@/components/log'
 import summary from '@/components/summary'
+import qrcode from '@/components/qrcode'
 
 Vue.use(Router)
 
@@ -35,6 +36,11 @@ export default new Router({
       path: '/patient/:id/log',
       name: 'log',
       component: log
+    },
+    {
+      path: '/qr',
+      name: 'qr',
+      component: qrcode
     },
     {
       path: '/patient/:id/summary',
