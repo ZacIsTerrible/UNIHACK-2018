@@ -90,6 +90,35 @@
     <div id="add-positioner">
         <v-container v-if="userType === 'Nurse'">
             <v-layout align-end justify-end row fill-height>
+
+                <v-dialog v-model="qr_code" width="500">
+                    <v-btn slot="activator" fab color="red lighten-2" dark>
+                        <v-icon dark>pages</v-icon>
+                    </v-btn>
+
+                    <v-card>
+                        <v-card-title class="headline grey lighten-2" primary-title>
+                            Qr Reader
+                        </v-card-title>
+
+                        <v-card-text>
+                          <QrcodeReader @decode="onDecode">
+                          </QrcodeReader>
+                            Scan patient's QR code.
+                        </v-card-text>
+
+                        <v-divider></v-divider>
+
+                        <v-card-actions>
+                            <v-spacer></v-spacer>
+                            <v-btn color="primary" flat @click="qr_code = false">
+                                Close
+                            </v-btn>
+                        </v-card-actions>
+                    </v-card>
+                </v-dialog>
+
+
                 <v-dialog v-model="dialog" persistent max-width="500px">
                     <v-btn slot="activator" fab dark color="secondary">
                         <v-icon dark>add</v-icon>
@@ -169,10 +198,18 @@
 
 <script>
 
+import {
+    QrcodeReader
+}
+from 'vue-qrcode-reader'
 export default {
+    components: {
+        QrcodeReader
+    },
     name: 'patientsList',
     data() {
         return {
+            qr_code: false,
             dialog: false,
             assignDialog: false,
             snackbar: false,
@@ -231,6 +268,10 @@ export default {
         accept: function(patient) {
             var ajax_request = "http://localhost:5000/accept_patient?patient_id=" + patient.patient_id + "&doctor_id=" + this.$cookies.get("userName")
             this.$router.push('/patient/' + patient.patient_id)
+        },
+        onDecode(decodedString) {
+            this.$router.push('/')
+            console.log(decodedString)
         }
     },
 
