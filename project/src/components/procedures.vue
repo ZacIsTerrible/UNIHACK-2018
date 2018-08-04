@@ -16,7 +16,7 @@
 
                         <v-list-tile @click="">
                             <v-list-tile-action>
-                                <v-checkbox></v-checkbox>
+                                <v-checkbox v-bind:id="data.Step_Number"></v-checkbox>
                             </v-list-tile-action>
 
                             <v-list-tile-content @click="check = !check">
@@ -54,6 +54,66 @@ export default {
             myJson: json,
             check: false
         }
+    },
+
+    mounted: function() {
+        if (annyang) {
+            var NumberEnum = {
+                "first": "1",
+                "second": "2",
+                "third": "3",
+                "forth": "4",
+                "fifth": "5",
+                "sixth": "6",
+                "seventh": "7",
+                "eighth": "8",
+                "ninth": "9",
+                "tenth": "10",
+                "eleven": "11",
+                "twelve": "12",
+                "thirteen": "13",
+                "fourteen": "14",
+                "fifteen": "15",
+                "sixteen": "16",
+            }
+
+            Object.freeze(NumberEnum)
+            // Let's define our first command. First the text we expect, and then the function it should call
+
+
+            var commands = {
+                'complete one': function() {
+                    console.log(document.getElementById("1").click())
+                }, 'complete two': function() {
+                    console.log(document.getElementById("2").click())
+                }, 'complete three': function() {
+                    console.log(document.getElementById("3").click())
+                }, 'complete four': function() {
+                    console.log(document.getElementById("4").click())
+                }, 'complete five': function() {
+                    console.log(document.getElementById("5").click())
+                }, 'complete six': function() {
+                    console.log(document.getElementById("6").click())
+                }, 'complete seven': function() {
+                    console.log(document.getElementById("7").click())
+                }, 'complete eighth': function() {
+                    console.log(document.getElementById("8").click())
+                }, 'complete nine': function() {
+                    console.log(document.getElementById("9").click())
+                }, 'complete ten': function() {
+                    console.log(document.getElementById("10").click())
+                }, 'complete eleven': function() {
+                    console.log(document.getElementById("11").click())
+                }
+            };
+
+            // Add our commands to annyang
+            annyang.addCommands(commands);
+
+            // Start listening. You can call this here, or attach this call to an event, button, etc.
+            annyang.start();
+        }
+
     }
 }
 

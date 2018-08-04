@@ -83,7 +83,9 @@ export default {
     },
 
     methods: {
-
+        view_procedures: function() {
+            this.$router.push('/patient/'+ this.patient.patient_id + '/procedure')
+        }
     },
 
     mounted: function() {
