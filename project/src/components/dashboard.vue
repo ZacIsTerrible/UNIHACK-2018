@@ -46,8 +46,8 @@
             </v-layout>
             <h2>Actions</h2>
             <v-layout row wrap>
-                <v-btn v-on:click="summary" color="secondary" flat>Summary</v-btn>
-                <v-btn v-on:click="doctor_log" color="secondary" flat>Log Session</v-btn>
+
+                <!-- <v-btn v-on:click="doctor_log" color="secondary" flat>Log Session</v-btn> -->
                 <v-btn v-on:click="view_procedures" color="secondary" flat>View Procedures</v-btn>
 
                 <v-layout row>

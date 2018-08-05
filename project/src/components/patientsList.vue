@@ -24,7 +24,7 @@
 
 <div id="app">
     <div id="container">
-
+        
         <v-container grid-list-xl text-xs-left>
             <h1 class="display-2 font-weight-medium">Patients</h1>
             <v-layout row wrap>

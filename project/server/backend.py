@@ -22,6 +22,12 @@ count = 0
 
 
 # API
+@app.route('/get_doctor_name',methods=['GET'])
+def get_doctor_name():
+    doctor_id = request.args.get('doctor_id')
+    doctor_name = idToDoctor[doctor_id]['name']
+    return jsonify({"doctor_name":doctor_name})
+
 @app.route('/get_progress', methods=['GET'])
 def get_progress():
     return jsonify(patientToProgress[patient_id])
@@ -120,6 +126,35 @@ def assign():
     del nursePQ[patient_id]
     # Return status. This is arbitary.
     return jsonify({ "status" : "success" })
+def add(patient_id, name, age, gender, height, weight, emergency_contact, health_insurance, condition, address, priority, bloodType):
+    if priority == "Low":
+        priority = 3
+    elif priority == "Mid":
+        priority = 2
+    elif priority == "High":
+        priority = 1
+
+    new_patient = {
+    	'patient_id' : patient_id,
+	   'name' : name,
+	   'age' : age,
+	   'gender' : gender,
+	   'height' : height,
+	   'weight' : weight,
+	   'emergency_contact' : emergency_contact,
+	   'health_insurance' : health_insurance,
+	   	'condition' : condition,
+	   	'accepted' : False,
+	   	'address' : address,
+	   	'priority' : priority,
+        'bloodType' : bloodType
+	}
+
+
+	# Adding the patient to patient list.
+    idToPatient[patient_id] = new_patient
+    nursePQ[patient_id] = new_patient
+    patientToProcedures[patient_id] = []
 
 @app.route('/add_patient', methods=['POST'])
 def add_patient():
@@ -139,13 +174,6 @@ def add_patient():
     address = request.args.get('address')
     priority = request.args.get('priority')
     bloodType = request.args.get('bloodType')
-
-    if priority == "Low":
-        priority = 3
-    elif priority == "Mid":
-        priority = 2
-    elif priority == "High":
-        priority = 1
 
     name = firstName + " " +lastName
 
@@ -217,5 +245,11 @@ with open('doctors.json') as f:
 
 for doctor in data:
     add_doctor(doctor["doctor_id"], doctor["name"], str(doctor["age"]), doctor["gender"], doctor["specialisation"])
+
+with open('patients.json') as f:
+    data = json.load(f)
+
+for patient in data:
+    add(patient["patient_id"], patient["name"], patient["age"], patient["gender"], patient["height"], patient["weight"], patient["emergency_contact"], patient["health_insurance"], patient["condition"], patient["address"], patient["priority"], patient["blood_type"])
 
 app.run()

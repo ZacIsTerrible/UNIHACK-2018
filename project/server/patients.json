@@ -1,5 +1,22 @@
 [
     {
+        "patient_id": "D*6CLD5",
+        "name": "Victoria Chase",
+        "age": 35,
+        "gender": "female",
+        "height": 183,
+        "weight": 81,
+        "emergency_contact": "(985) 442-3890",
+        "health_insurance": "Bupa",
+        "blood_type": "A-",
+        "condition": "Heart Attack",
+        "accepted": false,
+        "address": "923 Rockaway Parkway, Goldfield, Minnesota, 7670",
+        "medical_history": "Diagnosed Peptic Ulcer Disease",
+        "dietary_requirements": "None",
+        "priority" : 1
+    },
+    {
         "patient_id": "D*QEW7C",
         "name": "Hughes Hartman",
         "age": 24,
@@ -33,23 +50,7 @@
         "dietary_requirements": "None",
         "priority" : 3
     },
-    {
-        "patient_id": "D*6CLD5",
-        "name": "Victoria Chase",
-        "age": 35,
-        "gender": "female",
-        "height": 183,
-        "weight": 81,
-        "emergency_contact": "(985) 442-3890",
-        "health_insurance": "Bupa",
-        "blood_type": "A-",
-        "condition": "Heart Attack",
-        "accepted": false,
-        "address": "923 Rockaway Parkway, Goldfield, Minnesota, 7670",
-        "medical_history": "Diagnosed Peptic Ulcer Disease",
-        "dietary_requirements": "None",
-        "priority" : 1
-    },
+
     {
         "patient_id": "D*TNNX5",
         "name": "Theresa Lynn",

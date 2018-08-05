@@ -85,6 +85,8 @@ input[type=submit]:hover {
             <img src="../../CheckWrist Logo.png" style="height: 50px; background-color: rgba(255,255,255,0.9); padding: 2px; border-radius: 4px;">
             <v-toolbar-title v-text="title" style="font-family: 'Rubik', sans-serif; font-size: 40px;"></v-toolbar-title>
             <v-spacer></v-spacer>
+            <h1 style="font-family: 'Rubik', sans-serif; font-size: 40px;">{{doctor_name}}</h1>
+            <v-spacer></v-spacer>
             <a href="/#">
                 <v-btn flat color="accent" v-on:click="logout">Log Out</v-btn>
             </a>
@@ -132,6 +134,7 @@ export default {
                 title: 'CheckWrist',
                 isLoggedIn: false,
                 userName: null,
+                doctor_name: null,
             }
         },
 
@@ -161,6 +164,13 @@ export default {
                     this.userName = this.$cookies.get('userName')
                     this.isLoggedIn = true
                 }
+
+                this.axios
+                    .get("http://localhost:5000/get_doctor_name?doctor_id=" + this.$cookies.get("userName"))
+                    .then((response) => {
+                        this.doctor_name = response.data.doctor_name
+                        console.log(response.data.doctor_name)
+                    })
             })
         },
 
