@@ -82,7 +82,8 @@ input[type=submit]:hover {
 
     <div v-if="isLoggedIn" id="pwa-view">
         <v-toolbar app:clipped-left="clipped" color="primary" id="toolbar-style" fixed>
-            <v-toolbar-title v-text="title"></v-toolbar-title>
+            <img src="../../CheckWrist Logo.png" style="height: 50px; background-color: rgba(255,255,255,0.9); padding: 2px; border-radius: 4px;">
+            <v-toolbar-title v-text="title" style="font-family: 'Rubik', sans-serif; font-size: 40px;"></v-toolbar-title>
             <v-spacer></v-spacer>
             <a href="/#">
                 <v-btn flat color="accent" v-on:click="logout">Log Out</v-btn>
@@ -98,7 +99,9 @@ input[type=submit]:hover {
     <div v-else id="login-view">
         <v-layout align-center justify-center row fill-height>
             <div id="login-box">
-                <h1>Login</h1>
+
+                <img src="../../CheckWrist Logo.png" style="height: 250px;">
+                <h1 style="font-family: 'Rubik', sans-serif;">CheckWrist</h1>
 
                 <div id="inputs">
                     <form>

@@ -95,6 +95,7 @@ export default {
     name: 'dashboard',
     data() {
         return {
+            socket: null,
             patient: null,
             patient_name: null,
             patient_age: null,
@@ -112,6 +113,31 @@ export default {
         }
     },
 
+    sockets: {
+        connect: function() {
+            console.log('socket connected')
+        },
+
+        INCOMING_PATIENT: function(data) {
+            if (data.userName == this.$cookies.get("userName")) {
+                location.reload()
+            }
+        },
+
+        ATTENTION_DOCTOR: function(data) {
+            if ("Doctor" == this.$cookies.get("userType")) {
+                location.reload()
+            }
+        },
+
+        DIAGNOSIS_PATIENT: function(data) {
+            if ("Doctor" == this.$cookies.get("userType")) {
+                location.reload()
+            }
+        }
+
+    },
+
     methods: {
         view_procedures: function() {
             this.$router.push('/patient/' + this.patient.patient_id + '/procedure')
@@ -127,7 +153,9 @@ export default {
                     console.log(error.response)
                 });
             this.dialog = false;
+            this.ACCEPTED_PATIENT()
             this.$router.push('/')
+
         },
 
         summary: function() {
@@ -143,7 +171,26 @@ export default {
                 }).catch(error => {
                     console.log(error.response)
                 });
+            this.ACCEPTED_PATIENT()
             this.$router.push('/')
+        },
+
+        ADDED_PATIENT: function() {
+            this.$socket.emit('ADDED_PATIENT', {
+                userName: this.$cookies.get("userName")
+            })
+        },
+
+        ASSIGNED_DOCTOR: function() {
+            this.$socket.emit('ASSIGNED_DOCTOR', {
+                userName: this.$cookies.get("userName"),
+            })
+        },
+
+        ACCEPTED_PATIENT: function() {
+            this.$socket.emit('ACCEPTED_PATIENT', {
+                userName: this.$cookies.get("userName")
+            })
         }
     },
 

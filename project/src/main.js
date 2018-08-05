@@ -8,6 +8,11 @@ import 'vuetify/dist/vuetify.min.css'
 import VueCookies from 'vue-cookies'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
+import VueSocketio from 'vue-socket.io-extended';
+import io from 'socket.io-client';
+
+
+Vue.use(VueSocketio, io('http://localhost:3001'))
 
 Vue.use(VueCookies)
 

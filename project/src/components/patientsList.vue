@@ -98,9 +98,9 @@
             <v-layout align-end justify-end row fill-height>
 
 
-                    <v-btn slot="activator" fab color="red lighten-2" dark>
-                        <v-icon v-on:click="scan"dark>pages</v-icon>
-                    </v-btn>
+                <v-btn slot="activator" fab color="red lighten-2" dark>
+                    <v-icon v-on:click="scan" dark>pages</v-icon>
+                </v-btn>
 
 
 
@@ -187,6 +187,7 @@ export default {
     name: 'patientsList',
     data() {
         return {
+            socket: null,
             dialog: false,
             assignDialog: false,
             snackbar: false,
@@ -214,6 +215,31 @@ export default {
         }
     },
 
+    sockets: {
+        connect: function() {
+            console.log('socket connected')
+        },
+
+        INCOMING_PATIENT: function(data) {
+            if (data.userName == this.$cookies.get("userName")) {
+                location.reload()
+            }
+        },
+
+        ATTENTION_DOCTOR: function(data) {
+            if ("Doctor" == this.$cookies.get("userType")) {
+                location.reload()
+            }
+        },
+
+        DIAGNOSIS_PATIENT: function(data) {
+            if ("Doctor" == this.$cookies.get("userType")) {
+                location.reload()
+            }
+        }
+
+    },
+
     methods: {
         addPatient: function() {
             var ajax_request_first_half = "http://localhost:5000/add_patient?firstName=" + this.firstName + "&lastName=" + this.lastName + "&emergency_contact=" + this.emergencyContact + "&age=" + this.age + "&gender=" + this.gender + "&height=" + this.height + "&weight=" + this.weight
@@ -226,11 +252,17 @@ export default {
                     console.log(response);
                 }).catch(error => {
                     console.log(error.response)
-                });
+                })
+            this.ADDED_PATIENT()
+
+
+
             this.text = "Added New Patient"
-            this.snackbar = true
             document.getElementById("close2").click()
             location.reload();
+            this.snackbar = true
+
+
         },
         assignDoctor: function(patient) {
             var ajax_request = "http://localhost:5000/assign?patient_id=" + patient.patient_id + "&specialisation=" + this.selectedSpecialist
@@ -242,6 +274,9 @@ export default {
                     console.log(error.response)
                 });
 
+            this.ASSIGNED_DOCTOR()
+            this.ADDED_PATIENT()
+
             this.text = "Assigned Patient to Specialist"
             this.snackbar = true
             document.getElementById("close1").click()
@@ -250,9 +285,28 @@ export default {
         accept: function(patient) {
             var ajax_request = "http://localhost:5000/accept_patient?patient_id=" + patient.patient_id + "&doctor_id=" + this.$cookies.get("userName")
             this.$router.push('/patient/' + patient.patient_id)
+            this.ACCEPTED_PATIENT()
         },
-        scan: function(){
-          this.$router.push('/qr')
+        scan: function() {
+            this.$router.push('/qr')
+        },
+
+        ADDED_PATIENT: function() {
+            this.$socket.emit('ADDED_PATIENT', {
+                userName: this.$cookies.get("userName")
+            })
+        },
+
+        ASSIGNED_DOCTOR: function() {
+            this.$socket.emit('ASSIGNED_DOCTOR', {
+                userName: this.$cookies.get("userName"),
+            })
+        },
+
+        ACCEPTED_PATIENT: function() {
+            this.$socket.emit('ACCEPTED_PATIENT', {
+                userName: this.$cookies.get("userName")
+            })
         },
     },
 
