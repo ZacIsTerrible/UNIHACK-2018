@@ -1,4 +1,4 @@
-# UNIHACK2018
+# UNIHACK 2018
 
 Just another student team competing at [UNIHACK Sydney](https://unihack.net/sydney/) 2018
 
