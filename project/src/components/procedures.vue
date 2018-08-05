@@ -14,13 +14,13 @@
 
                     <v-list v-for="data in myJson" three-line>
 
-                        <v-list-tile @click="">
-                            <v-list-tile-action>
+                        <v-list-tile>
+                            <v-list-tile-action @click="add_procedure(data.Step_Number)">
                                 <v-checkbox v-bind:id="data.Step_Number"></v-checkbox>
                             </v-list-tile-action>
 
                             <v-list-tile-content @click="check = !check">
-                                <v-list-tile-title>{{ data.Task_Description }}</v-list-tile-title>
+                                <v-list-tile-title>{{ data.Step_Number }}) {{ data.Task_Description }}</v-list-tile-title>
                                 <v-list-tile-sub-title>Time Required: {{data.Timer}}</v-list-tile-sub-title>
 
                             </v-list-tile-content>
@@ -52,7 +52,8 @@ export default {
     data() {
         return {
             myJson: json,
-            check: false
+            check: false,
+            isLoaded: false,
         }
     },
 
@@ -60,7 +61,23 @@ export default {
         back: function() {
             console.log("back")
             this.$router.push('/patient/' + this.$route.params.id)
+        },
+        add_procedure: function(count) {
+            //var str = this.myJson[count-1].Task_Description;
+            //console.log(str)
+            if (this.isLoaded == true) {
+              var ajax_request = "http://localhost:5000/add_procedure?doctor_id=" + this.$cookies.get("userName") + "&count=" + count
+              console.log(ajax_request)
+              this.axios.post(ajax_request)
+                  .then(function(response) {
+                      console.log(response);
+                  }).catch(error => {
+                      console.log(error.response)
+                  });
+            }
         }
+
+
     },
 
     mounted: function() {
@@ -121,7 +138,26 @@ export default {
             annyang.start();
         }
 
+
+        this.axios
+            .get("http://localhost:5000/view_procedures")
+            .then((response) => {
+                console.log(response.data.counter)
+
+                for (var i = 1; i < response.data.counter+1; i++){
+
+                  document.getElementById(i.toString()).click()
+                }
+
+            })
+        this.isLoaded = true
+
+    },
+
+    beforeUpdate: function() {
+        this.isLoaded = false
     }
+
 }
 
 </script>
