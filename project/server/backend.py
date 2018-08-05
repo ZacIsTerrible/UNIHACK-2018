@@ -250,6 +250,7 @@ with open('patients.json') as f:
     data = json.load(f)
 
 for patient in data:
+    #if(patient["patient_id"] != "D*4NS6N"):
     add(patient["patient_id"], patient["name"], patient["age"], patient["gender"], patient["height"], patient["weight"], patient["emergency_contact"], patient["health_insurance"], patient["condition"], patient["address"], patient["priority"], patient["blood_type"])
 
 app.run()
