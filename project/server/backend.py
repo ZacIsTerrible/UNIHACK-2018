@@ -14,9 +14,10 @@ nursePQ = {}
 idToPatient = {}
 idToDoctor = {}
 specialisationToPatients = {}
+#doctorToPatient = {}
 patientToProcedures = {}
 patientToProgress = {}
-
+count = 0
 
 
 
@@ -35,8 +36,8 @@ def get_specialisations():
 @app.route('/view_procedures', methods=['GET'])
 def view_procedures():
     #may need to reverse order???
-    patient_id = request.args.get('patient_id')
-    return jsonify(patientToProcedures[patient_id])
+
+    return jsonify({"counter":count})
 
 @app.route('/get_patient_list', methods=['GET'])
 def get_patient_list():
@@ -44,14 +45,10 @@ def get_patient_list():
     specialisation = idToDoctor[doctor_id]['specialisation']
     patientQueue = specialisationToPatients[specialisation]
     patientList = []
-    print("HERE")
-    print(patientQueue)
 
     counter = 1
     while counter < 4:
         for patient in patientQueue:
-            print("in for loop")
-            print(patient)
             if patient['priority'] == counter:
                 patientList.append(patient)
         counter = counter + 1
@@ -76,26 +73,28 @@ def accept_patient():
     patient_id = request.args.get('patient_id')
     doctor_id = request.args.get('doctor_id')
     idToPatient[patient_id][accepted] = True
-
+    #doctorToPatient[doctor_id] = patient_id
 
 	# Return status. This is arbitary.
     return jsonify({ "status" : "success" })
 
-app.route('/add_procedure', methods=['POST'])
+@app.route('/add_procedure', methods=['POST'])
 def add_procedure():
+    global count
     doctor_id = request.args.get('doctor_id')
-    procedure_name = request.args.get('procedure_name')
-    comments = request.args.get('comments')
-    timestamp = time.asctime( time.localtime(time.time()) )
+    #patient_id = doctorToPatient[doctor_id]
+
+    doctor_name = idToDoctor[doctor_id]['name']
+    count = count+1
+
     #get the list of sessions for this patient
     #get the most recent session
     #add to it to given procedure
-    patientToProcedures[patient_id].append({
-        'doctor_id':doctor_id,
-        'timetstamp':timestamp,
-        'procedure_name':procedure_name,
-        'comments': comments
-    })
+    #patientToProcedures[patient_id].append({
+    #    'doctor_id':doctor_id,
+    #    'doctor_name':doctor_name,
+    #    'count':count,
+    #})
 
     # Return status. This is arbitary.
     return jsonify({ "status" : "success" })
@@ -109,7 +108,6 @@ def pass_on():
     specialisationToPatients[old_specialty].remove(idToPatient[patient_id])
     idToPatient[patient_id]['accepted'] = False
     specialisationToPatients[specialty].append(idToPatient[patient_id])
-
     # Return status. This is arbitary.
     return jsonify({ "status" : "success" })
 
@@ -178,7 +176,6 @@ def add_patient():
 
 def add_doctor(doctor_id, name, age, gender, specialisation):
 
-    print(doctor_id + " " + name + " " + age + " " + gender + " " + specialisation)
     new_doctor = {
 		'doctor_id' : doctor_id,
 		'name' : name,
@@ -209,6 +206,7 @@ def remove_patient():
     patient_id = request.args.get('patient_id')
     specialisation = idToDoctor[doctor_id]['specialisation']
     specialisationToPatients[specialisation].remove(idToPatient[patient_id])
+
 
 @app.route('/dummy')
 def dummy():
