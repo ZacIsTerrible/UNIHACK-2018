@@ -7,7 +7,7 @@ Just another student team competing at [UNIHACK Sydney](https://unihack.net/sydn
 - [Edwin Chau](https://github.com/edwinchau)
 - [Vicky Lin](https://github.com/vicky1in)
 - [Nick Theng](https://github.com/Nick421)
-- [Zachary Tu](https://github.com/ZacIsTerrible)
+- [Zachary Tu](https://github.com/Zachaccino)
 - [Michael Wormald](https://github.com/MendicantTanget)
 
 ***
